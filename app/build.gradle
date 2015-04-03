@@ -1,0 +1,97 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.hitherejoe.androidboilerplate"
+        minSdkVersion 14
+        targetSdkVersion 22
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:21.0.0'
+    compile 'com.android.support:cardview-v7:21.0.0'
+    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'uk.co.ribot:easyadapter:1.4.0@aar'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Espresso
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.0') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+
+    gradle.startParameter.taskNames.each { name ->
+        if (!name.startsWith('test')) {
+            androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+            androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+        }
+    }
+
+    // Robolectric
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-core:1.1'
+    testCompile 'org.hamcrest:hamcrest-library:1.1'
+    testCompile 'org.hamcrest:hamcrest-integration:1.1'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+
+    testCompile('org.robolectric:robolectric:2.4') {
+        exclude module: 'classworlds'
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-provider-api'
+    }
+}
