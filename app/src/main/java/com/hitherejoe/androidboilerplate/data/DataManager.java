@@ -22,7 +22,7 @@ public class DataManager {
     private Scheduler mScheduler;
 
     public DataManager(Context context, Scheduler scheduler) {
-        mAndroidBoilerplateService = new RetrofitHelper().setupHackerNewsService();
+        mAndroidBoilerplateService = new RetrofitHelper().setupAndroidBoilerplateService();
         mDatabaseHelper = new DatabaseHelper(context);
         mPreferencesHelper = new PreferencesHelper(context);
         mScheduler = scheduler;

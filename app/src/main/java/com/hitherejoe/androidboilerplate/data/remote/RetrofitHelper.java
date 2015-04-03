@@ -7,7 +7,7 @@ import retrofit.converter.GsonConverter;
 
 public class RetrofitHelper {
 
-    public AndroidBoilerplateService setupHackerNewsService() {
+    public AndroidBoilerplateService setupAndroidBoilerplateService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(AndroidBoilerplateService.ENDPOINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidBoilerPlate.iml" filepath="$PROJECT_DIR$/AndroidBoilerPlate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidBoilerplate.iml" filepath="$PROJECT_DIR$/AndroidBoilerplate.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -10,9 +10,9 @@ public class Db {
     public Db() { }
 
     public static abstract class BoilerplateTable {
-        public static final String TABLE_NAME = "boiler_plate";
+        public static final String TABLE_NAME = "boilerplate";
         public static final String COLUMN_ID = "id";
-        public static final String COLUMN_BOILERPLATE = "android_boiler_plate";
+        public static final String COLUMN_BOILERPLATE = "android_boilerplate";
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
