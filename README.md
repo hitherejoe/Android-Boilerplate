@@ -11,7 +11,7 @@ Setup to get started right away with:
 
 - Espresso testing
 - Robolectric testing
-- Network requests using retrogit and Rx Java
+- Network requests using retrofit and Rx Java
 - Database management using Rx java and pure SQLite
 - Holders for list items using EasyAdapter
 - Butterknife for easy view injection
