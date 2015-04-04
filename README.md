@@ -26,6 +26,7 @@ Requirements
  - Android SDK Build tools 22.0.1 
  - Android Support Repository
  - Android Support library
+ - Enabled [Unit Test support] (http://tools.android.com/tech-docs/unit-testing-support)
 
 Building
 --------
