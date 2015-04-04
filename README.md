@@ -7,7 +7,7 @@ recreating thesame project setup over and over again I decided it was also about
 
 <p align="center"><img src="http://i617.photobucket.com/albums/tt254/joeyerrr/project_structure.png" /></p>
 
-Setup to get started right away with:
+All ready to go with:
 
 - Espresso testing
 - Robolectric testing
@@ -37,10 +37,12 @@ To build, install and run a debug version, run this from the root of the project
 Testing
 --------
 
+For Android Studio to use syntax highlighting for Automated tests and Unit tests you **must** switch the Build Variant to the desired mode.
+
 To run **unit** tests on your machine using [Robolectric] (http://robolectric.org/):
 
     ./gradlew testDebug
     
-To run automated tests on connected devices:
+To run **automated** tests on connected devices:
 
     ./gradlew connectedAndroidTest
