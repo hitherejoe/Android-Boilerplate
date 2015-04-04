@@ -3,7 +3,7 @@ Android Boilerplate
 
 After finding no examples online of Espresso / Robolectric setup in Android Studio with the new Unit Testing feature
 (without using a third party plugin) I decided to create this boilerplate project to document the setup. After 
-recreating thesame project setup over and over again I decided it was also about time to do so! The project structure is as follows:
+recreating the same project setup over and over again I decided it was also about time to do so! The project structure is as follows:
 
 <p align="center"><img src="http://i617.photobucket.com/albums/tt254/joeyerrr/project_structure.png" /></p>
 
