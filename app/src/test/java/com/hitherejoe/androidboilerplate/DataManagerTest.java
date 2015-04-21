@@ -32,12 +32,6 @@ public class DataManagerTest {
 
     private DataManager mDataManager;
     private AndroidBoilerplateService mBoilerplateService;
-
-    @Before
-    public void setUp() {
-        mDataManager = new DataManager(Robolectric.application, Schedulers.immediate());
-        mBoilerplateService = mock(AndroidBoilerplateService.class);
-        mDataManager.setAndroidBoilerplateService(mBoilerplateService);
-    }
+    
 
 }

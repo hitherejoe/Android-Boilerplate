@@ -3,4 +3,5 @@
     <color name="boilerplate_primary">#222222</color>
     <color name="boilerplate_primary_dark">#000000</color>
     <color name="boilerplate_accent">#FFFFFF</color>
+    <color name="gray">#ffdfdfdf</color>
 </resources>

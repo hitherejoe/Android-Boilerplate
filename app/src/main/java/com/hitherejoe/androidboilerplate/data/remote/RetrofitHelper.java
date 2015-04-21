@@ -7,13 +7,13 @@ import retrofit.converter.GsonConverter;
 
 public class RetrofitHelper {
 
-    public AndroidBoilerplateService setupAndroidBoilerplateService() {
+    public RibotsService setupRibotsService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(AndroidBoilerplateService.ENDPOINT)
+                .setEndpoint(RibotsService.ENDPOINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter(new GsonBuilder().create()))
                 .build();
-        return restAdapter.create(AndroidBoilerplateService.class);
+        return restAdapter.create(RibotsService.class);
     }
 
 }

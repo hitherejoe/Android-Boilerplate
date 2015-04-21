@@ -19,6 +19,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import rx.functions.Action1;
@@ -64,10 +65,10 @@ public class DatabaseHelperTest {
 
         mDatabaseHelper.saveRibots(ribots).subscribe();
 
-        TestSubscriber<Ribot> result = new TestSubscriber<>();
+        TestSubscriber<List<Ribot>> result = new TestSubscriber<>();
         mDatabaseHelper.getRibots().subscribe(result);
         result.assertNoErrors();
-        result.assertReceivedOnNext(ribots);
+        result.assertReceivedOnNext(Collections.singletonList(ribots));
     }
 
 }

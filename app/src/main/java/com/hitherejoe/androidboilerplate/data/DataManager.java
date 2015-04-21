@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
 import com.hitherejoe.androidboilerplate.data.local.PreferencesHelper;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
-import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
+import com.hitherejoe.androidboilerplate.data.model.Ribot;
 import com.hitherejoe.androidboilerplate.data.remote.RetrofitHelper;
+import com.hitherejoe.androidboilerplate.data.remote.RibotsService;
 
 import java.util.List;
 
@@ -16,20 +16,20 @@ import rx.functions.Func1;
 
 public class DataManager {
 
-    private AndroidBoilerplateService mAndroidBoilerplateService;
+    private RibotsService mRibotsService;
     private DatabaseHelper mDatabaseHelper;
     private PreferencesHelper mPreferencesHelper;
     private Scheduler mScheduler;
 
     public DataManager(Context context, Scheduler scheduler) {
-        mAndroidBoilerplateService = new RetrofitHelper().setupAndroidBoilerplateService();
+        mRibotsService = new RetrofitHelper().setupRibotsService();
         mDatabaseHelper = new DatabaseHelper(context);
         mPreferencesHelper = new PreferencesHelper(context);
         mScheduler = scheduler;
     }
 
-    public void setAndroidBoilerplateService(AndroidBoilerplateService androidBoilerplateService) {
-        mAndroidBoilerplateService = androidBoilerplateService;
+    public void setRibotsService(RibotsService ribotsService) {
+        mRibotsService = ribotsService;
     }
 
     public void setScheduler(Scheduler scheduler) {
@@ -48,14 +48,18 @@ public class DataManager {
         return mScheduler;
     }
 
-    public Observable<Boilerplate> getAndroidBoilerplates() {
-        return mAndroidBoilerplateService.getAndroidBoilerplates()
-                .concatMap(new Func1<List<Boilerplate>, Observable<? extends Boilerplate>>() {
+    public Observable<Ribot> syncRibots() {
+        return mRibotsService.getRibots()
+                .concatMap(new Func1<List<Ribot>, Observable<Ribot>>() {
                     @Override
-                    public Observable<? extends Boilerplate> call(List<Boilerplate> boilerplates) {
-                        return Observable.from(boilerplates);
+                    public Observable<Ribot> call(List<Ribot> ribots) {
+                        return mDatabaseHelper.saveRibots(ribots);
                     }
                 });
+    }
+
+    public Observable<List<Ribot>> getRibots() {
+        return mDatabaseHelper.getRibots().distinct();
     }
 
 }

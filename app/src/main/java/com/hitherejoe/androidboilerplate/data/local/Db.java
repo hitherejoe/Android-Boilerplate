@@ -51,11 +51,5 @@ public class Db {
             return ribot;
         }
 
-        public static Func1<Cursor, Ribot> PARSE_CURSOR_FUNC = new Func1<Cursor, Ribot>() {
-            @Override
-            public Ribot call(Cursor cursor) {
-                return parseCursor(cursor);
-            }
-        };
     }
 }

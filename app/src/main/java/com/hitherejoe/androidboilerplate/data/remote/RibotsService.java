@@ -12,5 +12,5 @@ public interface RibotsService {
     String ENDPOINT = "https://ribots-api.ribot.io";
 
     @GET("/ribots")
-    Observable<List<Ribot>> getAllRibots();
+    Observable<List<Ribot>> getRibots();
 }

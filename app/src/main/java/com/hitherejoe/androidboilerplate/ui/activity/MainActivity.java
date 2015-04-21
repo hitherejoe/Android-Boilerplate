@@ -1,6 +1,8 @@
 package com.hitherejoe.androidboilerplate.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,8 +11,10 @@ import android.widget.TextView;
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.DataManager;
+import com.hitherejoe.androidboilerplate.data.SyncService;
 import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
-import com.hitherejoe.androidboilerplate.ui.adapter.BoilerplateHolder;
+import com.hitherejoe.androidboilerplate.data.model.Ribot;
+import com.hitherejoe.androidboilerplate.ui.adapter.RibotItemViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,68 +24,50 @@ import butterknife.InjectView;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.app.AppObservable;
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 import uk.co.ribot.easyadapter.EasyRecyclerAdapter;
 
 public class MainActivity extends BaseActivity {
 
-    @InjectView(R.id.text_hello_world)
-    TextView mHelloWorldText;
-
     private static final String TAG = "MainActivity";
+
     private DataManager mDataManager;
-    private List<Subscription> mSubscriptions;
-    private EasyRecyclerAdapter<Boilerplate> mEastRecycleAdapter;
+    private CompositeSubscription mSubscriptions;
+    private EasyRecyclerAdapter<Ribot> mRecyclerAdapter;
+
+    @InjectView(R.id.recycler_view)
+    RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startService(SyncService.getStartIntent(this));
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        mSubscriptions = new ArrayList<>();
+        mSubscriptions = new CompositeSubscription();
         mDataManager = AndroidBoilerplateApplication.get().getDataManager();
-        mEastRecycleAdapter = new EasyRecyclerAdapter<>(this, BoilerplateHolder.class);
+        mRecyclerAdapter = new EasyRecyclerAdapter<>(this, RibotItemViewHolder.class);
+        mRecyclerView.setAdapter(mRecyclerAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        loadRibots();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (Subscription subscription : mSubscriptions) subscription.unsubscribe();
+        mSubscriptions.unsubscribe();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void getAndroidBoilerPlates() {
-            mSubscriptions.add(AppObservable.bindFragment(this,
-                    mDataManager.getAndroidBoilerplates())
-                    .subscribeOn(mDataManager.getScheduler())
-                    .subscribe(new Subscriber<Boilerplate>() {
-                        @Override
-                        public void onCompleted() { }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e(TAG, "There was a problem getting the boilder plates " + e);
-                        }
-
-                        @Override
-                        public void onNext(Boilerplate boilerplate) {
-                            mEastRecycleAdapter.addItem(boilerplate);
-                        }
-                    }));
+    private void loadRibots() {
+        mSubscriptions.add(AppObservable.bindActivity(this, mDataManager.getRibots())
+                .subscribeOn(mDataManager.getScheduler())
+                .subscribe(new Action1<List<Ribot>>() {
+                    @Override
+                    public void call(List<Ribot> ribots) {
+                        mRecyclerAdapter.setItems(ribots);
+                    }
+                }));
     }
 
 }

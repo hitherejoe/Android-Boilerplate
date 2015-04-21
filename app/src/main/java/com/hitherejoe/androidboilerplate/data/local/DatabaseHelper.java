@@ -5,7 +5,9 @@ import android.database.Cursor;
 import com.hitherejoe.androidboilerplate.data.model.Ribot;
 import com.squareup.sqlbrite.SqlBrite;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -44,19 +46,21 @@ public class DatabaseHelper {
         });
     }
 
-    public Observable<Ribot> getRibots() {
+    public Observable<List<Ribot>> getRibots() {
         return mDb.createQuery(Db.RibotsTable.TABLE_NAME,
                 "SELECT * FROM " + Db.RibotsTable.TABLE_NAME)
-                .flatMap(mRunQueryFunc)
-                .map(Db.RibotsTable.PARSE_CURSOR_FUNC);
+                .map(new Func1<SqlBrite.Query, List<Ribot>>() {
+                    @Override
+                    public List<Ribot> call(SqlBrite.Query query) {
+                        Cursor cursor = query.run();
+                        List<Ribot> result = new ArrayList<>();
+                        while (cursor.moveToNext()) {
+                            result.add(Db.RibotsTable.parseCursor(cursor));
+                        }
+                        cursor.close();
+                        return result;
+                    }
+                });
     }
-
-    private Func1<SqlBrite.Query, Observable<Cursor>> mRunQueryFunc =
-            new Func1<SqlBrite.Query, Observable<Cursor>>() {
-                @Override
-                public Observable<Cursor> call(SqlBrite.Query query) {
-                    return ContentObservable.fromCursor(query.run());
-                }
-            };
 
 }
