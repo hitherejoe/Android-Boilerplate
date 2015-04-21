@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbOpenHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "boilerplate.db";
+    public static final String DATABASE_NAME = "ribots.db";
     public static final int DATABASE_VERSION = 1;
 
     public DbOpenHelper(Context context) {
@@ -17,7 +17,8 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            db.execSQL(Db.BoilerplateTable.CREATE);
+            db.execSQL(Db.RibotsTable.CREATE);
+            //Add other tables here
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

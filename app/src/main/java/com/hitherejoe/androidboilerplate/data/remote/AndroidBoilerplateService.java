@@ -9,12 +9,12 @@ import rx.Observable;
 
 public interface AndroidBoilerplateService {
 
-    public final String ENDPOINT = "https://android.boilerplate.com/v0/";
+    String ENDPOINT = "https://android.boilerplate.com/v0/";
 
     /**
      * Return a list of the boiler plates.
      */
     @GET("/boilerplates")
-    public Observable<List<Boilerplate>> getAndroidBoilerplates();
+    Observable<List<Boilerplate>> getAndroidBoilerplates();
 
 }

@@ -4,34 +4,58 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
+import com.hitherejoe.androidboilerplate.data.model.Ribot;
+
+import rx.functions.Func1;
 
 public class Db {
 
     public Db() { }
 
-    public static abstract class BoilerplateTable {
-        public static final String TABLE_NAME = "boilerplate";
+    public static abstract class RibotsTable {
+        public static final String TABLE_NAME = "ribots";
+
         public static final String COLUMN_ID = "id";
-        public static final String COLUMN_BOILERPLATE = "android_boilerplate";
+        public static final String COLUMN_HEX_CODE = "hex_code";
+        public static final String COLUMN_FIRST_NAME = "first_name";
+        public static final String COLUMN_LAST_NAME = "last_name";
+        public static final String COLUMN_ROLE = "role";
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_ID + " INTEGER PRIMARY KEY," +
-                        COLUMN_BOILERPLATE + " TEXT NOT NULL" +
-                        " ); ";
+                    COLUMN_ID + " TEXT PRIMARY KEY ON CONFLICT REPLACE, " +
+                    COLUMN_HEX_CODE + " TEXT NOT NULL, " +
+                    COLUMN_FIRST_NAME + " TEXT, " +
+                    COLUMN_LAST_NAME + " TEXT, " +
+                    COLUMN_ROLE + " TEXT" +
+                " ); ";
 
-        public static ContentValues toContentValues(Boilerplate boilerplate) {
+        public static ContentValues toContentValues(Ribot ribot) {
             ContentValues values = new ContentValues();
-            values.put(COLUMN_ID, boilerplate.id);
-            values.put(COLUMN_BOILERPLATE, boilerplate.androidBoilerplate);
+            values.put(COLUMN_ID, ribot.id);
+            values.put(COLUMN_HEX_CODE, ribot.hexCode);
+            values.put(COLUMN_FIRST_NAME, ribot.info.firstName);
+            values.put(COLUMN_LAST_NAME, ribot.info.lastName);
+            values.put(COLUMN_ROLE, ribot.info.role);
             return values;
         }
 
-        public static Boilerplate parseCursor(Cursor cursor) {
-            Boilerplate boilerplate = new Boilerplate();
-            boilerplate.id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
-            boilerplate.androidBoilerplate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOILERPLATE));
-            return boilerplate;
+        public static Ribot parseCursor(Cursor cursor) {
+            Ribot ribot = new Ribot();
+            ribot.id = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID));
+            ribot.hexCode = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HEX_CODE));
+            ribot.info = new Ribot.Info();
+            ribot.info.firstName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME));
+            ribot.info.lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME));
+            ribot.info.role = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROLE));
+            return ribot;
         }
+
+        public static Func1<Cursor, Ribot> PARSE_CURSOR_FUNC = new Func1<Cursor, Ribot>() {
+            @Override
+            public Ribot call(Cursor cursor) {
+                return parseCursor(cursor);
+            }
+        };
     }
 }

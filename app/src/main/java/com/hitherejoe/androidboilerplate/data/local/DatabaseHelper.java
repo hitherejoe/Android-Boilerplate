@@ -2,59 +2,61 @@ package com.hitherejoe.androidboilerplate.data.local;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import com.hitherejoe.androidboilerplate.data.model.Ribot;
+import com.squareup.sqlbrite.SqlBrite;
 
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
+import java.util.Collection;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.content.ContentObservable;
+import rx.functions.Func1;
 
 public class DatabaseHelper {
 
-    private DbOpenHelper mDatabaseOpenHelper;
+    private SqlBrite mDb;
 
     public DatabaseHelper(Context context) {
-        mDatabaseOpenHelper = new DbOpenHelper(context);
+        mDb = SqlBrite.create(new DbOpenHelper(context));
     }
 
-    public SQLiteDatabase getReadableDatabase() {
-        return mDatabaseOpenHelper.getReadableDatabase();
+    public SqlBrite getDb() {
+        return mDb;
     }
 
-    public SQLiteDatabase getWritableDatabase() {
-        return mDatabaseOpenHelper.getWritableDatabase();
-    }
-
-    public Observable<Boilerplate> saveBoilerplate(final Boilerplate story) {
-        return Observable.create(new Observable.OnSubscribe<Boilerplate>() {
+    public Observable<Ribot> saveRibots(final Collection<Ribot> ribots) {
+        return Observable.create(new Observable.OnSubscribe<Ribot>() {
             @Override
-            public void call(Subscriber<? super Boilerplate> subscriber) {
-                SQLiteDatabase db = getWritableDatabase();
-                db.insertOrThrow(Db.BoilerplateTable.TABLE_NAME, null, Db.BoilerplateTable.toContentValues(story));
-                subscriber.onNext(story);
-                subscriber.onCompleted();
-            }
-        });
-    }
-
-    public Observable<Void> clearBoilerplates() {
-        return Observable.create(new Observable.OnSubscribe<Void>() {
-            @Override
-            public void call(Subscriber<? super Void> subscriber) {
-                SQLiteDatabase db = getWritableDatabase();
-                db.beginTransaction();
+            public void call(Subscriber<? super Ribot> subscriber) {
+                mDb.beginTransaction();
                 try {
-                    Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-                    while (cursor.moveToNext()) {
-                        db.delete(cursor.getString(cursor.getColumnIndex("name")), null, null);
+                    for (Ribot ribot : ribots) {
+                        long result = mDb.insert(Db.RibotsTable.TABLE_NAME,
+                                Db.RibotsTable.toContentValues(ribot));
+                        if (result >= 0) subscriber.onNext(ribot);
                     }
-                    cursor.close();
-                    db.setTransactionSuccessful();
+                    mDb.setTransactionSuccessful();
                     subscriber.onCompleted();
                 } finally {
-                    db.endTransaction();
+                    mDb.endTransaction();
                 }
             }
         });
     }
+
+    public Observable<Ribot> getRibots() {
+        return mDb.createQuery(Db.RibotsTable.TABLE_NAME,
+                "SELECT * FROM " + Db.RibotsTable.TABLE_NAME)
+                .flatMap(mRunQueryFunc)
+                .map(Db.RibotsTable.PARSE_CURSOR_FUNC);
+    }
+
+    private Func1<SqlBrite.Query, Observable<Cursor>> mRunQueryFunc =
+            new Func1<SqlBrite.Query, Observable<Cursor>>() {
+                @Override
+                public Observable<Cursor> call(SqlBrite.Query query) {
+                    return ContentObservable.fromCursor(query.run());
+                }
+            };
+
 }

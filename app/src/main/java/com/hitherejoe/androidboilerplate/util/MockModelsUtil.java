@@ -1,6 +1,7 @@
 package com.hitherejoe.androidboilerplate.util;
 
 import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
+import com.hitherejoe.androidboilerplate.data.model.Ribot;
 
 import java.util.Random;
 import java.util.UUID;
@@ -11,11 +12,15 @@ public class MockModelsUtil {
         return UUID.randomUUID().toString();
     }
 
-    public static Boilerplate createMockBoilerPlate() {
-        Boilerplate boilerplate = new Boilerplate();
-        boilerplate.id = new Random().nextInt();
-        boilerplate.androidBoilerplate = generateRandomString();
-        return boilerplate;
+    public static Ribot createRibot() {
+        Ribot ribot = new Ribot();
+        ribot.info = new Ribot.Info();
+        ribot.id = generateRandomString();
+        ribot.hexCode = "#f49637";
+        ribot.info.firstName = "Antony";
+        ribot.info.lastName = "Ribot";
+        ribot.info.role = "CEO";
+        return ribot;
     }
 
 }

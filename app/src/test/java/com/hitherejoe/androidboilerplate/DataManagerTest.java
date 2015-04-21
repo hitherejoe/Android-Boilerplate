@@ -40,28 +40,4 @@ public class DataManagerTest {
         mDataManager.setAndroidBoilerplateService(mBoilerplateService);
     }
 
-    @Test
-    public void shouldGetBookmarks() throws Exception {
-        Boilerplate mockBoilerplateOne = MockModelsUtil.createMockBoilerPlate();
-        Boilerplate mockBoilerplateTwo = MockModelsUtil.createMockBoilerPlate();
-        Boilerplate mockBoilerplateThree = MockModelsUtil.createMockBoilerPlate();
-        List<Boilerplate> boilerplates = new ArrayList<>();
-        boilerplates.add(mockBoilerplateOne);
-        boilerplates.add(mockBoilerplateTwo);
-        boilerplates.add(mockBoilerplateThree);
-        when(mBoilerplateService.getAndroidBoilerplates()).thenReturn(Observable.just(boilerplates));
-
-        final List<Boilerplate> boilerplateList = new ArrayList<>();
-        mDataManager.getAndroidBoilerplates().subscribe(new Action1<Boilerplate>() {
-            @Override
-            public void call(Boilerplate story) {
-                boilerplateList.add(story);
-            }
-        });
-        Assert.assertEquals(3, boilerplateList.size());
-        Assert.assertTrue(boilerplateList.contains(mockBoilerplateOne));
-        Assert.assertTrue(boilerplateList.contains(mockBoilerplateTwo));
-        Assert.assertTrue(boilerplateList.contains(mockBoilerplateThree));
-    }
-
 }

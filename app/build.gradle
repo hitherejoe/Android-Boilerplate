@@ -1,14 +1,3 @@
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
-    }
-}
-
 apply plugin: 'com.android.application'
 
 android {
@@ -17,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.hitherejoe.androidboilerplate"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 22
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 1
@@ -52,6 +41,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'uk.co.ribot:easyadapter:1.4.0@aar'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.sqlbrite:sqlbrite:0.1.0'
 
     // Espresso
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
