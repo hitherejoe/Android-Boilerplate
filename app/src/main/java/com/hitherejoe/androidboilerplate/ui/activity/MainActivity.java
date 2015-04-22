@@ -3,26 +3,18 @@ package com.hitherejoe.androidboilerplate.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.DataManager;
 import com.hitherejoe.androidboilerplate.data.SyncService;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.data.model.Ribot;
 import com.hitherejoe.androidboilerplate.ui.adapter.RibotItemViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import rx.Subscriber;
-import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;

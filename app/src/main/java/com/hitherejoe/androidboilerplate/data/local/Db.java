@@ -3,10 +3,7 @@ package com.hitherejoe.androidboilerplate.data.local;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.data.model.Ribot;
-
-import rx.functions.Func1;
 
 public class Db {
 

@@ -4,12 +4,9 @@ import android.database.Cursor;
 
 import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
 import com.hitherejoe.androidboilerplate.data.local.Db;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.data.model.Ribot;
 import com.hitherejoe.androidboilerplate.util.DefaultConfig;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import rx.functions.Action1;
 import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;

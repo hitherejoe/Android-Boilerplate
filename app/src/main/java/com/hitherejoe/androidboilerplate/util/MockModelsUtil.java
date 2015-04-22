@@ -1,9 +1,7 @@
 package com.hitherejoe.androidboilerplate.util;
 
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.data.model.Ribot;
 
-import java.util.Random;
 import java.util.UUID;
 
 public class MockModelsUtil {

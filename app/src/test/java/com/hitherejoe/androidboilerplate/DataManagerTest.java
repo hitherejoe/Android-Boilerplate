@@ -5,34 +5,26 @@ import android.database.Cursor;
 
 import com.hitherejoe.androidboilerplate.data.DataManager;
 import com.hitherejoe.androidboilerplate.data.local.Db;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.data.model.Ribot;
-import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
 import com.hitherejoe.androidboilerplate.data.remote.RibotsService;
 import com.hitherejoe.androidboilerplate.util.DefaultConfig;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Action1;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Matchers.anyByte;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
