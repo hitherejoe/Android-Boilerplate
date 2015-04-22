@@ -11,8 +11,8 @@ import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
@@ -23,15 +23,15 @@ import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = DefaultConfig.EMULATE_SDK)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, emulateSdk = DefaultConfig.EMULATE_SDK)
 public class DatabaseHelperTest {
 
     private DatabaseHelper mDatabaseHelper;
 
     @Before
     public void setUp() {
-        mDatabaseHelper = new DatabaseHelper(Robolectric.application);
+        mDatabaseHelper = new DatabaseHelper(RuntimeEnvironment.application);
     }
 
     @Test
