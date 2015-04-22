@@ -17,6 +17,8 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
         try {
+            //Uncomment line below if you want to enable foreign keys
+            //db.execSQL("PRAGMA foreign_keys=ON;");
             db.execSQL(Db.RibotsTable.CREATE);
             //Add other tables here
             db.setTransactionSuccessful();

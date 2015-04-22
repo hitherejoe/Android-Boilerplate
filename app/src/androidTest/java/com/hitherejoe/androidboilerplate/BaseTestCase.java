@@ -1,30 +1,50 @@
 package com.hitherejoe.androidboilerplate;
 
 import android.app.Activity;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
+import com.hitherejoe.androidboilerplate.data.DataManager;
+import com.hitherejoe.androidboilerplate.data.remote.RibotsService;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 import rx.schedulers.Schedulers;
 
 import static org.mockito.Mockito.mock;
 
+@RunWith(AndroidJUnit4.class)
 public class BaseTestCase<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
 
-    protected AndroidBoilerplateService mAndroidBoilerplateService;
+    protected RibotsService mMockRibotsService;
 
     public BaseTestCase(Class<T> cls) {
         super(cls);
     }
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
-        AndroidBoilerplateApplication.get().getDataManager().getPreferencesHelper().clear();
-        AndroidBoilerplateApplication.get().getDataManager().getDatabaseHelper().clearBoilerplates().subscribe();
-        mAndroidBoilerplateService = mock(AndroidBoilerplateService.class);
-        AndroidBoilerplateApplication.get().getDataManager().setAndroidBoilerplateService(mAndroidBoilerplateService);
-        AndroidBoilerplateApplication.get().getDataManager().setScheduler(Schedulers.immediate());
+        // Injecting the Instrumentation instance is required
+        // for your test to run with AndroidJUnitRunner.
+        injectInstrumentation(InstrumentationRegistry.getInstrumentation());
+        DataManager dataManager = AndroidBoilerplateApplication.get().getDataManager();
+        //Mock the API services so tests don't rely on network connection
+        mMockRibotsService = mock(RibotsService.class);
+        dataManager.setRibotsService(mMockRibotsService);
+        //Data manager Observables run in same thread as the tests
+        dataManager.setScheduler(Schedulers.immediate());
+        //Clear data
+        dataManager.getPreferencesHelper().clear();
+        dataManager.getDatabaseHelper().clearTables().subscribe();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
 }
