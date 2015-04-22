@@ -1,17 +1,21 @@
 package com.hitherejoe.androidboilerplate.data;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
 import com.hitherejoe.androidboilerplate.data.local.PreferencesHelper;
 import com.hitherejoe.androidboilerplate.data.model.Ribot;
 import com.hitherejoe.androidboilerplate.data.remote.RetrofitHelper;
 import com.hitherejoe.androidboilerplate.data.remote.RibotsService;
+import com.squareup.otto.Bus;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Scheduler;
+import rx.functions.Action0;
 import rx.functions.Func1;
 
 public class DataManager {
@@ -20,11 +24,13 @@ public class DataManager {
     private DatabaseHelper mDatabaseHelper;
     private PreferencesHelper mPreferencesHelper;
     private Scheduler mScheduler;
+    private Bus mBus;
 
     public DataManager(Context context, Scheduler scheduler) {
         mRibotsService = new RetrofitHelper().setupRibotsService();
         mDatabaseHelper = new DatabaseHelper(context);
         mPreferencesHelper = new PreferencesHelper(context);
+        mBus = new Bus();
         mScheduler = scheduler;
     }
 
@@ -48,6 +54,10 @@ public class DataManager {
         return mScheduler;
     }
 
+    public Bus getBus() {
+        return mBus;
+    }
+
     public Observable<Ribot> syncRibots() {
         return mRibotsService.getRibots()
                 .concatMap(new Func1<List<Ribot>, Observable<Ribot>>() {
@@ -60,6 +70,26 @@ public class DataManager {
 
     public Observable<List<Ribot>> getRibots() {
         return mDatabaseHelper.getRibots().distinct();
+    }
+
+    /// Helper method to post events from doOnCompleted.
+    private Action0 postEventAction(final Object event) {
+        return new Action0() {
+            @Override
+            public void call() {
+                postEventSafely(event);
+            }
+        };
+    }
+
+    // Helper method to post an event from a different thread to the main one.
+    private void postEventSafely(final Object event) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                mBus.post(event);
+            }
+        });
     }
 
 }
