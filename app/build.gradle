@@ -5,10 +5,10 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.hitherejoe.androidboilerplate"
+        applicationId "uk.co.ribot.androidboilerplate"
         minSdkVersion 16
         targetSdkVersion 22
-        testInstrumentationRunner "com.hitherejoe.androidboilerplate.util.UnlockDeviceTestRunner"
+        testInstrumentationRunner "uk.co.ribot.androidboilerplate.util.UnlockDeviceTestRunner"
         versionCode 1
         versionName "1.0"
     }
