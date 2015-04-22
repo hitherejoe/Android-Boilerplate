@@ -4,8 +4,6 @@ package uk.co.ribot.androidboilerplate;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 
-import com.hitherejoe.androidboilerplate.R;
-
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.ui.activity.MainActivity;
 import uk.co.ribot.androidboilerplate.util.MockModelsUtil;

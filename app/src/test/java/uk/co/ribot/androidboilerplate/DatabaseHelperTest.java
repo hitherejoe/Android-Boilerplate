@@ -2,8 +2,6 @@ package uk.co.ribot.androidboilerplate;
 
 import android.database.Cursor;
 
-import com.hitherejoe.androidboilerplate.BuildConfig;
-
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.Db;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
