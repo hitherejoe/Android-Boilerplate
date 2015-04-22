@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">AndroidBoilerPlate</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_action_cancel">Cancel</string>
+    <string name="dialog_error_title">Sorry</string>
 </resources>
