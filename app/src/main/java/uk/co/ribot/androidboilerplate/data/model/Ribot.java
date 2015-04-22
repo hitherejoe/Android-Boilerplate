@@ -5,6 +5,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class Ribot implements Parcelable {
 
     @SerializedName("_id")
@@ -13,6 +17,15 @@ public class Ribot implements Parcelable {
     public Info info;
 
     public Ribot() {
+    }
+
+    public static String[] getIds(Collection<Ribot> ribots) {
+        String[] ids = new String[ribots.size()];
+        int i = 0;
+        for (Ribot ribot : ribots) {
+            ids[i] = ribot.id;
+        }
+        return ids;
     }
 
     @Override

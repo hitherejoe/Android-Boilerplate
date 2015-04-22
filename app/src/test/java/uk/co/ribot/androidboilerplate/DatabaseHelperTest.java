@@ -35,13 +35,13 @@ public class DatabaseHelperTest {
     }
 
     @Test
-    public void shouldSaveRibots() throws Exception {
+    public void shouldSetRibots() throws Exception {
         Ribot ribot1 = MockModelsUtil.createRibot();
         Ribot ribot2 = MockModelsUtil.createRibot();
         List<Ribot> ribots = Arrays.asList(ribot1, ribot2);
 
         TestSubscriber<Ribot> result = new TestSubscriber<>();
-        mDatabaseHelper.saveRibots(ribots).subscribe(result);
+        mDatabaseHelper.setRibots(ribots).subscribe(result);
         result.assertNoErrors();
         result.assertReceivedOnNext(ribots);
 
@@ -59,7 +59,7 @@ public class DatabaseHelperTest {
         Ribot ribot2 = MockModelsUtil.createRibot();
         List<Ribot> ribots = Arrays.asList(ribot1, ribot2);
 
-        mDatabaseHelper.saveRibots(ribots).subscribe();
+        mDatabaseHelper.setRibots(ribots).subscribe();
 
         TestSubscriber<List<Ribot>> result = new TestSubscriber<>();
         mDatabaseHelper.getRibots().subscribe(result);

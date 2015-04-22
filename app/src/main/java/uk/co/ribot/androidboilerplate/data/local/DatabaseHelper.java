@@ -48,13 +48,14 @@ public class DatabaseHelper {
         });
     }
 
-    public Observable<Ribot> saveRibots(final Collection<Ribot> ribots) {
+    public Observable<Ribot> setRibots(final Collection<Ribot> newRibots) {
         return Observable.create(new Observable.OnSubscribe<Ribot>() {
             @Override
             public void call(Subscriber<? super Ribot> subscriber) {
                 mDb.beginTransaction();
                 try {
-                    for (Ribot ribot : ribots) {
+                    deleteAllRibotsApartFrom(newRibots);
+                    for (Ribot ribot : newRibots) {
                         long result = mDb.insert(Db.RibotsTable.TABLE_NAME,
                                 Db.RibotsTable.toContentValues(ribot));
                         if (result >= 0) subscriber.onNext(ribot);
@@ -83,6 +84,28 @@ public class DatabaseHelper {
                         return result;
                     }
                 });
+    }
+
+    private void deleteAllRibotsApartFrom(Collection<Ribot> ribotsToKeep) {
+        if (ribotsToKeep.isEmpty()) {
+            mDb.delete(Db.RibotsTable.TABLE_NAME, null);
+        } else {
+            mDb.delete(Db.RibotsTable.TABLE_NAME,
+                    Db.RibotsTable.COLUMN_ID +
+                            " NOT IN (" + createPlaceholders(ribotsToKeep.size()) + ")",
+                    Ribot.getIds(ribotsToKeep));
+        }
+    }
+
+    private String createPlaceholders(int length) {
+        if (length < 1) {
+            throw new RuntimeException("No placeholders");
+        } else {
+            StringBuilder sb = new StringBuilder(length * 2 - 1);
+            sb.append("?");
+            for (int i = 1; i < length; i++) sb.append(",?");
+            return sb.toString();
+        }
     }
 
 }
