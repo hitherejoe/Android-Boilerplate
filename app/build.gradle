@@ -116,7 +116,6 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     configFile file('config/checkstyle/checkstyle.xml')
     source 'src'
     include '**/*.java'
-    exclude '**/gen/**'
 
     classpath = files( )
 }
