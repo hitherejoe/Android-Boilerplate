@@ -9,7 +9,7 @@ public class Db {
 
     public Db() { }
 
-    public static abstract class RibotsTable {
+    public abstract static class RibotsTable {
         public static final String TABLE_NAME = "ribots";
 
         public static final String COLUMN_ID = "id";
@@ -42,9 +42,10 @@ public class Db {
             ribot.id = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID));
             ribot.hexCode = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HEX_CODE));
             ribot.info = new Ribot.Info();
-            ribot.info.firstName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME));
             ribot.info.lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME));
             ribot.info.role = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROLE));
+            ribot.info.firstName =
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME));
             return ribot;
         }
 

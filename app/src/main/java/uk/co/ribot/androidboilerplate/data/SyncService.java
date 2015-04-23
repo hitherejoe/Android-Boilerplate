@@ -41,7 +41,8 @@ public class SyncService extends Service {
             return START_NOT_STICKY;
         }
 
-        DataManager dataManager = ((AndroidBoilerplateApplication) getApplicationContext()).getDataManager();
+        DataManager dataManager =
+                ((AndroidBoilerplateApplication) getApplicationContext()).getDataManager();
         if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
         mSubscription = dataManager.syncRibots()
                 .subscribeOn(dataManager.getScheduler())
@@ -83,7 +84,9 @@ public class SyncService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (NetworkUtil.isNetworkConnected(context)) {
-                if (BuildConfig.DEBUG) Log.i(TAG, "Connection is now available, triggering sync...");
+                if (BuildConfig.DEBUG) {
+                    Log.i(TAG, "Connection is now available, triggering sync...");
+                }
                 ComponentUtil.toggleComponent(context, this.getClass(), false);
                 context.startService(getStartIntent(context));
             }

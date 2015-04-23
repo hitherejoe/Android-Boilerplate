@@ -22,7 +22,10 @@ public class UnlockDeviceTestRunner extends AndroidJUnitRunner {
                         .disableKeyguard();
                 // Wake up the screen.
                 ((PowerManager) app.getSystemService(Context.POWER_SERVICE))
-                        .newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, simpleName)
+                        .newWakeLock(PowerManager.FULL_WAKE_LOCK |
+                                PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                                PowerManager.ON_AFTER_RELEASE,
+                                simpleName)
                         .acquire();
 
             }

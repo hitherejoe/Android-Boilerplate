@@ -44,7 +44,8 @@ public class DataManagerTest {
 
     @Test
     public void shouldSyncRibots() throws Exception {
-        List<Ribot> ribots = Arrays.asList(MockModelsUtil.createRibot(), MockModelsUtil.createRibot());
+        List<Ribot> ribots = Arrays.asList(MockModelsUtil.createRibot(),
+                MockModelsUtil.createRibot());
         when(mMockRibotsService.getRibots())
                 .thenReturn(Observable.just(ribots));
 

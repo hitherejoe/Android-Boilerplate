@@ -28,6 +28,9 @@ public class AndroidBoilerplateApplication extends Application {
         return sAndroidBoilerplateApplication;
     }
 
-    public DataManager getDataManager() { return mDataManager; }
+    public DataManager getDataManager() {
+        return mDataManager;
+    }
 
 }
+
