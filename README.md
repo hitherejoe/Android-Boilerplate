@@ -1,21 +1,22 @@
 Android Boilerplate
 ===================
 
-After finding no examples online of Espresso / Robolectric setup in Android Studio with the new Unit Testing feature
-(without using a third party plugin) I decided to create this boilerplate project to document the setup. After 
-recreating the same project setup over and over again I decided it was also about time to do so! The project structure is as follows:
+Sample Android app that we use at [ribot](http://ribot.co.uk) as a reference for new Android projects. It demonstrates the architecture, tools and guidelines that we use when developing for the Android platform ( https://github.com/ribot/android-guidelines )
 
-<p align="center"><img src="http://i617.photobucket.com/albums/tt254/joeyerrr/project_structure.png" /></p>
+Libraries and tools included:
 
-All ready to go with:
-
-- Espresso testing
-- Robolectric testing
-- Network requests using retrofit and Rx Java
-- Database management using Rx java and pure SQLite
-- Holders for list items using EasyAdapter
-- Butterknife for easy view injection
-- Picasso for easy image downloading / display
+- Support library 22.1
+- RecyclerViews and CardViews 
+- [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
+- [Retrofit](http://square.github.io/retrofit/) and [OkHttp](https://github.com/square/okhttp)
+- [SqlBrite](https://github.com/square/sqlbrite)
+- [EasyAdapter](https://github.com/ribot/easy-adapter)
+- [Butterknife](https://github.com/JakeWharton/butterknife)
+- [Picasso](http://square.github.io/picasso/)
+- [Otto](http://square.github.io/otto/) event bus
+- Functional tests with [Espresso](https://code.google.com/p/android-test-kit/wiki/Espresso)
+- Unit tests with [Robolectric](http://robolectric.org/) 
+- [Mockito](http://mockito.org/)
 
 Requirements
 ------------
@@ -25,25 +26,32 @@ Requirements
  - Android SDK Tools
  - Android SDK Build tools 22.0.1 
  - Android Support Repository
- - Android Support library
- - Enabled [Unit Test support] (http://tools.android.com/tech-docs/unit-testing-support)
 
 Building
 --------
 
-To build, install and run a debug version, run this from the root of the project:
+To build and install the debug version:
 
-    ./gradlew installRunDebug
+    ./gradlew installDebug
     
 Testing
 --------
 
 For Android Studio to use syntax highlighting for Automated tests and Unit tests you **must** switch the Build Variant to the desired mode.
 
-To run **unit** tests on your machine using [Robolectric] (http://robolectric.org/):
+To run **unit** tests on your machine:
 
     ./gradlew testDebug
     
 To run **automated** tests on connected devices:
 
     ./gradlew connectedAndroidTest
+
+Code style
+-----------
+
+The project uses a checkstyle plugin to make sure that the code follows our [Android code guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
+
+To validate the code run:
+
+    ./gradlew checkstyle
