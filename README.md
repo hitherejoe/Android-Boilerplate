@@ -68,4 +68,4 @@ To quickly start a new project from this boilerplate follow the next steps:
   * In `src/main/AndroidManifest.xml` and `src/debug/AndroidManifest.xml`.
 * Optionally, in `app/build.gradle` add the signing config to enable release versions.
 * Create a new git respository, [see GitHub tutorial](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
-* Replace the test code with your app code following the same architecture.
+* Replace the example code with your app code following the same architecture.
