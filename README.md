@@ -43,7 +43,7 @@ To run **unit** tests on your machine:
 
     ./gradlew testDebug
     
-To run **automated** tests on connected devices:
+To run **functional** tests on connected devices:
 
     ./gradlew connectedAndroidTest
 
@@ -55,3 +55,17 @@ The project uses a checkstyle plugin to make sure that the code follows our [And
 To validate the code run:
 
     ./gradlew checkstyle
+
+New project setup 
+-----------------------------------------
+
+To quickly start a new project from this boilerplate follow the next steps:
+
+* Download this [repository as a zip](https://github.com/ribot/android-boilerplate/archive/master.zip).
+* Change the package name. 
+  * Rename packages in main, androidTest and test using Android Studio.
+  * In `app/build.gradle` file, `packageName` and `testInstrumentationRunner`.
+  * In `src/main/AndroidManifest.xml` and `src/debug/AndroidManifest.xml`.
+* Optionally, in `app/build.gradle` add the signing config to enable release versions.
+* Create a new git respository, [see GitHub tutorial](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
+* Replace the example code with your app code following the same architecture.
