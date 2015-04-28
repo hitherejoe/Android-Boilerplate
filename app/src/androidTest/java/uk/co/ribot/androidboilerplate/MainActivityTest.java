@@ -5,10 +5,9 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
+import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
 import uk.co.ribot.androidboilerplate.ui.activity.MainActivity;
 import uk.co.ribot.androidboilerplate.util.MockModelsUtil;
-
-import org.junit.Test;
 
 import java.util.List;
 
@@ -27,8 +26,7 @@ public class MainActivityTest extends BaseTestCase<MainActivity> {
         super(MainActivity.class);
     }
 
-    @Test
-    public void checkListOfRibotsShows() throws Exception {
+    public void testListOfRibotsShows() throws Exception {
         List<Ribot> mockRibots = MockModelsUtil.createListRibots(20);
         when(mMockRibotsService.getRibots())
                 .thenReturn(Observable.just(mockRibots));
@@ -50,4 +48,5 @@ public class MainActivityTest extends BaseTestCase<MainActivity> {
         }
 
     }
+
 }
