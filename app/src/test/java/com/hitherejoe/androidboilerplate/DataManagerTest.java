@@ -12,8 +12,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import rx.schedulers.Schedulers;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = DefaultConfig.EMULATE_SDK)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, emulateSdk = DefaultConfig.EMULATE_SDK)
 public class DataManagerTest {
 
     private DataManager mDataManager;
@@ -35,7 +35,7 @@ public class DataManagerTest {
 
     @Before
     public void setUp() {
-        mDataManager = new DataManager(Robolectric.application, Schedulers.immediate());
+        mDataManager = new DataManager(RuntimeEnvironment.application, Schedulers.immediate());
         mBoilerplateService = mock(AndroidBoilerplateService.class);
         mDataManager.setAndroidBoilerplateService(mBoilerplateService);
     }
