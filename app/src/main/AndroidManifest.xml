@@ -31,6 +31,9 @@
             </intent-filter>
         </receiver>
 
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="Api Key from an org here: https://crashlytics.com/settings/organizations" />
     </application>
 
 </manifest>

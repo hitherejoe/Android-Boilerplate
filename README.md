@@ -56,6 +56,25 @@ To validate the code run:
 
     ./gradlew checkstyle
 
+Distribution
+------------
+
+The project can be distributed using either [Crashlytics](http://support.crashlytics.com/knowledgebase/articles/388925-beta-distributions-with-gradle) or the [Google Play Store](https://github.com/Triple-T/gradle-play-publisher).
+
+To do this, set up a local variable `$ANDROID_DISTRIBUTION` to any of the following values:
+
+    play-production
+    play-alpha
+    play-beta
+    crashlytics-yourgroupname
+    crashlytics-yourgroupname2
+
+    etc
+
+Then use the following command e.g. on your CI server:
+
+    ./gradlew clean checkstyle check connectedAndroidTest assembleRelease $(if [[ $ANDROID_DISTRIBUTION == crashlytics-* ]]; then echo crashlyticsUploadDistributionRelease; else echo publishApkRelease; fi )
+
 New project setup 
 -----------------------------------------
 
@@ -67,5 +86,6 @@ To quickly start a new project from this boilerplate follow the next steps:
   * In `app/build.gradle` file, `packageName` and `testInstrumentationRunner`.
   * In `src/main/AndroidManifest.xml` and `src/debug/AndroidManifest.xml`.
 * Optionally, in `app/build.gradle` add the signing config to enable release versions.
-* Create a new git respository, [see GitHub tutorial](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
+* Optionally, replace Crashlytics API key in AndroidManifest.xml and uncomment Crashlytics lines in `AndroidBoilerplateApplication.java` and `app/build.gradle`
+* Create a new git repository, [see GitHub tutorial](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
 * Replace the example code with your app code following the same architecture.
