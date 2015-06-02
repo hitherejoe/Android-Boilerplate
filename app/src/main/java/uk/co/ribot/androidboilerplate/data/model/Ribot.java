@@ -24,6 +24,7 @@ public class Ribot implements Parcelable {
         int i = 0;
         for (Ribot ribot : ribots) {
             ids[i] = ribot.id;
+            i++;
         }
         return ids;
     }
