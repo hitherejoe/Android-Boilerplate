@@ -45,13 +45,12 @@ android {
     signingConfigs {
         // You must set up an environment var before release signing
         // Run: export APP_KEY={password}
-        /* TODO Add your release keystore in /keystore folder
         release {
             storeFile file("keystore/release.keystore")
-            keyAlias "alias"
+            keyAlias "boilerplate"
             storePassword "$System.env.APP_KEY"
             keyPassword "$System.env.APP_KEY"
-        }*/
+        }
 
         debug {
             storeFile file("keystore/debug.keystore")
@@ -63,7 +62,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+
+            /*
+            * By default ProGuard optimizations are disabled. If you want to enable them
+            * replace proguard-android.txt with proguard-android-optimize.txt but make sure you
+            * test thoroughly if you go this route as app may become unstable.
+            */
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             ext.betaDistributionReleaseNotesFilePath = file("../crashlytics_release_notes.txt").absolutePath
