@@ -89,3 +89,4 @@ To quickly start a new project from this boilerplate follow the next steps:
 * Optionally, replace Crashlytics API key in AndroidManifest.xml and uncomment Crashlytics lines in `AndroidBoilerplateApplication.java` and `app/build.gradle`
 * Create a new git repository, [see GitHub tutorial](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
 * Replace the example code with your app code following the same architecture.
+* Update `proguard-rules.pro` to keep models (see TODO in file) and add extra rules to file if needed. 
