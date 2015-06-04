@@ -40,6 +40,11 @@
 -dontwarn okio.**
 -dontwarn com.squareup.okhttp.**
 
+# Otto rules
+-keepclassmembers class ** {
+    @com.squareup.otto.Subscribe public *;
+    @com.squareup.otto.Produce public *;
+}
 
 # Related to RxJava
 -dontwarn sun.misc.Unsafe
