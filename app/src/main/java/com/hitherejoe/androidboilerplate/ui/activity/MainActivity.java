@@ -20,6 +20,7 @@ import butterknife.InjectView;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.app.AppObservable;
+import rx.subscriptions.CompositeSubscription;
 import uk.co.ribot.easyadapter.EasyRecyclerAdapter;
 
 public class MainActivity extends BaseActivity {
@@ -29,23 +30,23 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
     private DataManager mDataManager;
-    private List<Subscription> mSubscriptions;
-    private EasyRecyclerAdapter<Boilerplate> mEastRecycleAdapter;
+    private CompositeSubscription mSubscriptions;
+    private EasyRecyclerAdapter<Boilerplate> mEasyRecycleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        mSubscriptions = new ArrayList<>();
+        mSubscriptions = new CompositeSubscription();
         mDataManager = AndroidBoilerplateApplication.get().getDataManager();
-        mEastRecycleAdapter = new EasyRecyclerAdapter<>(this, BoilerplateHolder.class);
+        mEasyRecycleAdapter = new EasyRecyclerAdapter<>(this, BoilerplateHolder.class);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (Subscription subscription : mSubscriptions) subscription.unsubscribe();
+        mSubscriptions.unsubscribe();
     }
 
     @Override
@@ -79,7 +80,7 @@ public class MainActivity extends BaseActivity {
 
                         @Override
                         public void onNext(Boilerplate boilerplate) {
-                            mEastRecycleAdapter.addItem(boilerplate);
+                            mEasyRecycleAdapter.addItem(boilerplate);
                         }
                     }));
     }
