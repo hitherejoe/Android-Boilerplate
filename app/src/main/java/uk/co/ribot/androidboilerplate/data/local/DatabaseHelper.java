@@ -102,8 +102,10 @@ public class DatabaseHelper {
             throw new RuntimeException("No placeholders");
         } else {
             StringBuilder sb = new StringBuilder(length * 2 - 1);
-            sb.append("?");
-            for (int i = 1; i < length; i++) sb.append(",?");
+            sb.append('?');
+            for (int i = 1; i < length; i++) {
+                sb.append(",?");
+            }
             return sb.toString();
         }
     }

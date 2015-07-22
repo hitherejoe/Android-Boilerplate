@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class PreferencesHelper {
 
-    private static SharedPreferences mPref;
+    private SharedPreferences mPref;
 
     public static final String PREF_FILE_NAME = "android_boilerplate_pref_file";
 
