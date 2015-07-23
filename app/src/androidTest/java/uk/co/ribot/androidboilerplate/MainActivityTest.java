@@ -1,11 +1,8 @@
 package uk.co.ribot.androidboilerplate;
 
-
 import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
 
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
-import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
 import uk.co.ribot.androidboilerplate.ui.activity.MainActivity;
 import uk.co.ribot.androidboilerplate.util.MockModelsUtil;
 
@@ -33,7 +30,7 @@ public class MainActivityTest extends BaseTestCase<MainActivity> {
 
         getActivity();
 
-        onView(ViewMatchers.withText(R.string.app_name))
+        onView(withText(R.string.app_name))
                 .check(matches(isDisplayed()));
 
         int position = 0;
