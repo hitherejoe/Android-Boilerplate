@@ -24,7 +24,7 @@ import rx.observers.TestSubscriber;
 import static junit.framework.Assert.assertEquals;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, emulateSdk = DefaultConfig.EMULATE_SDK)
+@Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
 public class DatabaseHelperTest {
 
     private DatabaseHelper mDatabaseHelper;
@@ -45,7 +45,8 @@ public class DatabaseHelperTest {
         result.assertNoErrors();
         result.assertReceivedOnNext(ribots);
 
-        Cursor cursor = mDatabaseHelper.getDb().query("SELECT * FROM " + Db.RibotsTable.TABLE_NAME);
+        Cursor cursor = mDatabaseHelper.getBriteDb()
+                .query("SELECT * FROM " + Db.RibotsTable.TABLE_NAME);
         assertEquals(2, cursor.getCount());
         for (Ribot ribot : ribots) {
             cursor.moveToNext();

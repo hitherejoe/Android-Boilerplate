@@ -3,6 +3,8 @@ package uk.co.ribot.androidboilerplate.data.local;
 import android.content.Context;
 import android.database.Cursor;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
+
+import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
 
 import java.util.ArrayList;
@@ -15,13 +17,13 @@ import rx.functions.Func1;
 
 public class DatabaseHelper {
 
-    private SqlBrite mDb;
+    private BriteDatabase mDb;
 
     public DatabaseHelper(Context context) {
-        mDb = SqlBrite.create(new DbOpenHelper(context));
+        mDb = SqlBrite.create().wrapDatabaseHelper(new DbOpenHelper(context));
     }
 
-    public SqlBrite getDb() {
+    public BriteDatabase getBriteDb() {
         return mDb;
     }
 
