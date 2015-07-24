@@ -29,7 +29,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, emulateSdk = DefaultConfig.EMULATE_SDK)
+@Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
 public class DataManagerTest {
 
     private DataManager mDataManager;
@@ -54,7 +54,7 @@ public class DataManagerTest {
         result.assertNoErrors();
         result.assertReceivedOnNext(ribots);
 
-        Cursor cursor = mDataManager.getDatabaseHelper().getDb()
+        Cursor cursor = mDataManager.getDatabaseHelper().getBriteDb()
                 .query("SELECT * FROM " + Db.RibotsTable.TABLE_NAME);
         assertEquals(2, cursor.getCount());
         cursor.close();

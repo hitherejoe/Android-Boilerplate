@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import butterknife.Bind;
 import uk.co.ribot.androidboilerplate.AndroidBoilerplateApplication;
 import uk.co.ribot.androidboilerplate.R;
 import uk.co.ribot.androidboilerplate.data.DataManager;
@@ -14,7 +15,6 @@ import uk.co.ribot.androidboilerplate.ui.adapter.RibotItemViewHolder;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rx.android.app.AppObservable;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity {
     private CompositeSubscription mSubscriptions;
     private EasyRecyclerAdapter<Ribot> mRecyclerAdapter;
 
-    @InjectView(R.id.recycler_view)
+    @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     @Override
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         startService(SyncService.getStartIntent(this));
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mSubscriptions = new CompositeSubscription();
         mDataManager = AndroidBoilerplateApplication.get().getDataManager();
         mRecyclerAdapter = new EasyRecyclerAdapter<>(this, RibotItemViewHolder.class);
