@@ -4,58 +4,66 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import uk.co.ribot.androidboilerplate.BoilerplateApplication;
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
-import uk.co.ribot.androidboilerplate.data.remote.RetrofitHelper;
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
 import com.squareup.otto.Bus;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.functions.Action0;
 import rx.functions.Func1;
+import uk.co.ribot.androidboilerplate.injection.component.DaggerDataManagerComponent;
+import uk.co.ribot.androidboilerplate.injection.module.DataManagerModule;
 
 public class DataManager {
 
-    private RibotsService mRibotsService;
-    private DatabaseHelper mDatabaseHelper;
-    private PreferencesHelper mPreferencesHelper;
-    private Scheduler mScheduler;
-    private Bus mBus;
+    @Inject protected RibotsService mRibotsService;
+    @Inject protected DatabaseHelper mDatabaseHelper;
+    @Inject protected PreferencesHelper mPreferencesHelper;
+    @Inject protected Bus mBus;
+    @Inject protected Scheduler mSubscribeScheduler;
 
-    public DataManager(Context context, Scheduler scheduler) {
-        mRibotsService = new RetrofitHelper().setupRibotsService();
-        mDatabaseHelper = new DatabaseHelper(context);
-        mPreferencesHelper = new PreferencesHelper(context);
-        mBus = new Bus();
-        mScheduler = scheduler;
+    public DataManager(Context context) {
+        injectDependencies(context);
     }
 
-    public void setRibotsService(RibotsService ribotsService) {
+    /* This constructor is provided so we can set up a DataManager with mocks from unit test.
+     * At the moment this is not possible to do with Dagger because the Gradle APT plugin doesn't
+     * work for the unit test variant, plus Dagger 2 doesn't provide a nice way of overriding
+     * modules */
+    public DataManager(RibotsService ribotsService,
+                       DatabaseHelper databaseHelper,
+                       Bus bus,
+                       PreferencesHelper preferencesHelper,
+                       Scheduler subscribeScheduler) {
         mRibotsService = ribotsService;
+        mDatabaseHelper = databaseHelper;
+        mBus = bus;
+        mPreferencesHelper = preferencesHelper;
+        mSubscribeScheduler = subscribeScheduler;
     }
 
-    public void setScheduler(Scheduler scheduler) {
-        mScheduler = scheduler;
-    }
-
-    public DatabaseHelper getDatabaseHelper() {
-        return mDatabaseHelper;
+    protected void injectDependencies(Context context) {
+        DaggerDataManagerComponent.builder()
+                .applicationComponent(BoilerplateApplication.get(context).getComponent())
+                .dataManagerModule(new DataManagerModule(context))
+                .build()
+                .inject(this);
     }
 
     public PreferencesHelper getPreferencesHelper() {
         return mPreferencesHelper;
     }
 
-    public Scheduler getScheduler() {
-        return mScheduler;
-    }
-
-    public Bus getBus() {
-        return mBus;
+    public Scheduler getSubscribeScheduler() {
+        return mSubscribeScheduler;
     }
 
     public Observable<Ribot> syncRibots() {

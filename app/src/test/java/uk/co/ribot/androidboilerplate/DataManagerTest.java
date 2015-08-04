@@ -3,8 +3,12 @@ package uk.co.ribot.androidboilerplate;
 
 import android.database.Cursor;
 
+import com.squareup.otto.Bus;
+
 import uk.co.ribot.androidboilerplate.data.DataManager;
+import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.Db;
+import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
 import uk.co.ribot.androidboilerplate.util.DefaultConfig;
@@ -34,12 +38,21 @@ public class DataManagerTest {
 
     private DataManager mDataManager;
     private RibotsService mMockRibotsService;
+    private Bus mMockBus;
+    private DatabaseHelper mDatabaseHelper;
+    private PreferencesHelper mPreferencesHelper;
 
     @Before
     public void setUp() {
-        mDataManager = new DataManager(RuntimeEnvironment.application, Schedulers.immediate());
         mMockRibotsService = mock(RibotsService.class);
-        mDataManager.setRibotsService(mMockRibotsService);
+        mMockBus = mock(Bus.class);
+        mDatabaseHelper = new DatabaseHelper(RuntimeEnvironment.application);
+        mPreferencesHelper = new PreferencesHelper(RuntimeEnvironment.application);
+        mDataManager = new DataManager(mMockRibotsService,
+                mDatabaseHelper,
+                mMockBus,
+                mPreferencesHelper,
+                Schedulers.immediate());
     }
 
     @Test
@@ -54,7 +67,7 @@ public class DataManagerTest {
         result.assertNoErrors();
         result.assertReceivedOnNext(ribots);
 
-        Cursor cursor = mDataManager.getDatabaseHelper().getBriteDb()
+        Cursor cursor = mDatabaseHelper.getBriteDb()
                 .query("SELECT * FROM " + Db.RibotsTable.TABLE_NAME);
         assertEquals(2, cursor.getCount());
         cursor.close();

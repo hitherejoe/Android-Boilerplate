@@ -9,7 +9,7 @@ import android.util.Log;
 
 import uk.co.ribot.androidboilerplate.BuildConfig;
 
-public class ComponentUtil {
+public class AndroidComponentUtil {
 
     public static final String TAG = "ComponentUtil";
 
