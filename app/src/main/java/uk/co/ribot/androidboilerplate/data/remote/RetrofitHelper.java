@@ -7,7 +7,7 @@ import retrofit.converter.GsonConverter;
 
 public class RetrofitHelper {
 
-    public RibotsService setupRibotsService() {
+    public RibotsService newRibotsService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(RibotsService.ENDPOINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)

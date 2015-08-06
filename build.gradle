@@ -4,9 +4,10 @@ buildscript {
         maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.3'
+        classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.16.0'
         classpath 'com.github.triplet.gradle:play-publisher:1.1.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.6'
     }
 }
 

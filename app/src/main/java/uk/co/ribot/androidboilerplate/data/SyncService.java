@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import uk.co.ribot.androidboilerplate.AndroidBoilerplateApplication;
+import javax.inject.Inject;
+
+import uk.co.ribot.androidboilerplate.BoilerplateApplication;
 import uk.co.ribot.androidboilerplate.BuildConfig;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
-import uk.co.ribot.androidboilerplate.util.ComponentUtil;
+import uk.co.ribot.androidboilerplate.util.AndroidComponentUtil;
 import uk.co.ribot.androidboilerplate.util.NetworkUtil;
 
 import rx.Observer;
@@ -20,6 +22,7 @@ public class SyncService extends Service {
 
     public static final String TAG = "SyncService";
 
+    @Inject DataManager mDataManager;
     private Subscription mSubscription;
 
     public static Intent getStartIntent(Context context) {
@@ -27,7 +30,13 @@ public class SyncService extends Service {
     }
 
     public static boolean isRunning(Context context) {
-        return ComponentUtil.isServiceRunning(context, SyncService.class);
+        return AndroidComponentUtil.isServiceRunning(context, SyncService.class);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        BoilerplateApplication.get(this).getComponent().inject(this);
     }
 
     @Override
@@ -36,16 +45,14 @@ public class SyncService extends Service {
 
         if (!NetworkUtil.isNetworkConnected(this)) {
             if (BuildConfig.DEBUG) Log.i(TAG, "Sync canceled, connection not available.");
-            ComponentUtil.toggleComponent(this, SyncOnConnectionAvailable.class, true);
+            AndroidComponentUtil.toggleComponent(this, SyncOnConnectionAvailable.class, true);
             stopSelf(startId);
             return START_NOT_STICKY;
         }
 
-        DataManager dataManager =
-                ((AndroidBoilerplateApplication) getApplicationContext()).getDataManager();
         if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
-        mSubscription = dataManager.syncRibots()
-                .subscribeOn(dataManager.getScheduler())
+        mSubscription = mDataManager.syncRibots()
+                .subscribeOn(mDataManager.getSubscribeScheduler())
                 .subscribe(new Observer<Ribot>() {
                     @Override
                     public void onCompleted() {
@@ -87,7 +94,7 @@ public class SyncService extends Service {
                 if (BuildConfig.DEBUG) {
                     Log.i(TAG, "Connection is now available, triggering sync...");
                 }
-                ComponentUtil.toggleComponent(context, this.getClass(), false);
+                AndroidComponentUtil.toggleComponent(context, this.getClass(), false);
                 context.startService(getStartIntent(context));
             }
         }

@@ -3,15 +3,16 @@ package uk.co.ribot.androidboilerplate;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 
-import uk.co.ribot.androidboilerplate.data.DataManager;
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
 
-import rx.schedulers.Schedulers;
-
-import static org.mockito.Mockito.mock;
+import uk.co.ribot.androidboilerplate.injection.component.ApplicationTestComponent;
+import uk.co.ribot.androidboilerplate.injection.component.DaggerApplicationTestComponent;
+import uk.co.ribot.androidboilerplate.injection.module.ApplicationTestModule;
+import uk.co.ribot.androidboilerplate.util.TestDataManager;
 
 public class BaseTestCase<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
 
+    protected TestDataManager mDataManager;
     protected RibotsService mMockRibotsService;
 
     public BaseTestCase(Class<T> cls) {
@@ -21,15 +22,20 @@ public class BaseTestCase<T extends Activity> extends ActivityInstrumentationTes
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        DataManager dataManager = AndroidBoilerplateApplication.get().getDataManager();
-        //Mock the API services so tests don't rely on network connection
-        mMockRibotsService = mock(RibotsService.class);
-        dataManager.setRibotsService(mMockRibotsService);
-        //Data manager Observables run in same thread as the tests
-        dataManager.setScheduler(Schedulers.immediate());
-        //Clear data
-        dataManager.getPreferencesHelper().clear();
-        dataManager.getDatabaseHelper().clearTables().subscribe();
+
+        BoilerplateApplication application = BoilerplateApplication
+                .get(getInstrumentation().getTargetContext());
+
+        ApplicationTestComponent appTestComponent = DaggerApplicationTestComponent.builder()
+                .applicationTestModule(new ApplicationTestModule(application))
+                .build();
+        application.setComponent(appTestComponent);
+
+        mDataManager = (TestDataManager) appTestComponent.dataManager();
+        mMockRibotsService = mDataManager.getRibotsService();
+
+        mDataManager.getPreferencesHelper().clear();
+        mDataManager.getDatabaseHelper().clearTables();
     }
 
 }
