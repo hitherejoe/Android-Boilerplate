@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import butterknife.Bind;
+import rx.Subscriber;
+import timber.log.Timber;
 import uk.co.ribot.androidboilerplate.R;
 import uk.co.ribot.androidboilerplate.data.DataManager;
 import uk.co.ribot.androidboilerplate.data.SyncService;
@@ -55,9 +57,17 @@ public class MainActivity extends BaseActivity {
     private void loadRibots() {
         mSubscriptions.add(AppObservable.bindActivity(this, mDataManager.getRibots())
                 .subscribeOn(mDataManager.getSubscribeScheduler())
-                .subscribe(new Action1<List<Ribot>>() {
+                .subscribe(new Subscriber<List<Ribot>>() {
                     @Override
-                    public void call(List<Ribot> ribots) {
+                    public void onCompleted() { }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e("There was an error loading the ribots: " + e);
+                    }
+
+                    @Override
+                    public void onNext(List<Ribot> ribots) {
                         mRecyclerAdapter.setItems(ribots);
                     }
                 }));

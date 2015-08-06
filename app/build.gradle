@@ -141,6 +141,7 @@ dependencies {
 
     compile 'io.reactivex:rxandroid:0.25.0'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'uk.co.ribot:easyadapter:1.5.0@aar'
     compile 'com.crashlytics.android:crashlytics:1.1.13'
 
