@@ -1,33 +1,38 @@
 package com.hitherejoe.androidboilerplate;
 
 import android.app.Application;
+import android.content.Context;
 
-import com.hitherejoe.androidboilerplate.data.DataManager;
+import com.hitherejoe.androidboilerplate.injection.component.ApplicationComponent;
+import com.hitherejoe.androidboilerplate.injection.component.DaggerApplicationComponent;
+import com.hitherejoe.androidboilerplate.injection.module.ApplicationModule;
 
-import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class AndroidBoilerplateApplication extends Application {
 
-    private static AndroidBoilerplateApplication sAndroidBoilerplateApplication;
-    private DataManager mDataManager;
+    ApplicationComponent mApplicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        sAndroidBoilerplateApplication = this;
-        mDataManager = new DataManager(this, Schedulers.io());
+        if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
     }
 
-    @Override
-    public void onTerminate() {
-        sAndroidBoilerplateApplication = null;
-        super.onTerminate();
+    public static AndroidBoilerplateApplication get(Context context) {
+        return (AndroidBoilerplateApplication) context.getApplicationContext();
     }
 
-    public static AndroidBoilerplateApplication get() {
-        return sAndroidBoilerplateApplication;
+    public ApplicationComponent getComponent() {
+        return mApplicationComponent;
     }
 
-    public DataManager getDataManager() { return mDataManager; }
-
+    // Needed to replace the component with a test specific one
+    public void setComponent(ApplicationComponent applicationComponent) {
+        mApplicationComponent = applicationComponent;
+    }
 }

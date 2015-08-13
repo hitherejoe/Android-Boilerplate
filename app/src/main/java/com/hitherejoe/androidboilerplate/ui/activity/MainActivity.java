@@ -1,46 +1,53 @@
 package com.hitherejoe.androidboilerplate.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.DataManager;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
-import com.hitherejoe.androidboilerplate.ui.adapter.BoilerplateHolder;
+import com.hitherejoe.androidboilerplate.data.model.Character;
+import com.hitherejoe.androidboilerplate.ui.adapter.CharacterHolder;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rx.Subscriber;
-import rx.Subscription;
-import rx.android.app.AppObservable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
+import timber.log.Timber;
 import uk.co.ribot.easyadapter.EasyRecyclerAdapter;
 
 public class MainActivity extends BaseActivity {
 
-    @InjectView(R.id.text_hello_world)
-    TextView mHelloWorldText;
+    @Bind(R.id.recycler_characters)
+    RecyclerView mCharactersRecycler;
 
-    private static final String TAG = "MainActivity";
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bind(R.id.progress_indicator)
+    ProgressBar mProgressBar;
+
     private DataManager mDataManager;
     private CompositeSubscription mSubscriptions;
-    private EasyRecyclerAdapter<Boilerplate> mEasyRecycleAdapter;
+    private EasyRecyclerAdapter<Character> mEasyRecycleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mSubscriptions = new CompositeSubscription();
-        mDataManager = AndroidBoilerplateApplication.get().getDataManager();
-        mEasyRecycleAdapter = new EasyRecyclerAdapter<>(this, BoilerplateHolder.class);
+        mDataManager = AndroidBoilerplateApplication.get(this).getComponent().dataManager();
+        setupToolbar();
+        setupRecyclerView();
+        getAndroidBoilerPlates();
     }
 
     @Override
@@ -51,36 +58,50 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_github:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void getAndroidBoilerPlates() {
-            mSubscriptions.add(AppObservable.bindFragment(this,
-                    mDataManager.getAndroidBoilerplates())
-                    .subscribeOn(mDataManager.getScheduler())
-                    .subscribe(new Subscriber<Boilerplate>() {
-                        @Override
-                        public void onCompleted() { }
+    private void setupToolbar() {
+        setSupportActionBar(mToolbar);
+    }
 
+    private void setupRecyclerView() {
+        mCharactersRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mEasyRecycleAdapter = new EasyRecyclerAdapter<>(this, CharacterHolder.class);
+        mCharactersRecycler.setAdapter(mEasyRecycleAdapter);
+    }
+
+    private void getAndroidBoilerPlates() {
+            mSubscriptions.add(mDataManager.getAndroidBoilerplates()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(mDataManager.getScheduler())
+                    .subscribe(new Subscriber<com.hitherejoe.androidboilerplate.data.model.Character>() {
                         @Override
-                        public void onError(Throwable e) {
-                            Log.e(TAG, "There was a problem getting the boilder plates " + e);
+                        public void onCompleted() {
+                            mProgressBar.setVisibility(View.GONE);
                         }
 
                         @Override
-                        public void onNext(Boilerplate boilerplate) {
-                            mEasyRecycleAdapter.addItem(boilerplate);
+                        public void onError(Throwable e) {
+                            mProgressBar.setVisibility(View.GONE);
+                            Timber.e("Error getting characters");
+                        }
+
+                        @Override
+                        public void onNext(Character character) {
+                            Timber.d(character.name);
+                            mEasyRecycleAdapter.addItem(character);
                         }
                     }));
     }

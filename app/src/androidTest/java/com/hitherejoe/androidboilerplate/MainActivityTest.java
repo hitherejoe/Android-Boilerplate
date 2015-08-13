@@ -1,26 +1,45 @@
 package com.hitherejoe.androidboilerplate;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.MediumTest;
+
 import com.hitherejoe.androidboilerplate.ui.activity.MainActivity;
 
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class MainActivityTest extends BaseTestCase<MainActivity> {
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-    public MainActivityTest() {
-        super(MainActivity.class);
+@RunWith(AndroidJUnit4.class)
+@MediumTest
+public class MainActivityTest {
+
+    private Context mContext;
+
+    @Rule
+    public final ActivityTestRule<MainActivity> main =
+            new ActivityTestRule<>(MainActivity.class, false, false);
+
+    @Before
+    public void initTargetContext() {
+        mContext = getTargetContext();
     }
 
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
+    @Test
     public void testActivityDisplayed() throws Exception {
-        getActivity();
-        onView(withText(R.string.hello_world)).check(matches(isDisplayed()));
+        Intent i = new Intent(getTargetContext(), MainActivity.class);
+
+        main.launchActivity(i);
+        onView(withText(mContext.getString(R.string.hello_world))).check(matches(isDisplayed()));
     }
 }

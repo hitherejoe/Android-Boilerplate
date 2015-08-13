@@ -9,16 +9,13 @@ import android.widget.TextView;
 
 import com.hitherejoe.androidboilerplate.R;
 
-
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class MainFragment extends Fragment {
 
-    @InjectView(R.id.text_hello_world)
+    @Bind(R.id.text_hello_world)
     TextView mHelloWorldText;
-
-    private static final String TAG = "StoriesFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +25,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.inject(this, fragmentView);
+        ButterKnife.bind(this, fragmentView);
         return fragmentView;
     }
 

@@ -4,31 +4,31 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hitherejoe.androidboilerplate.R;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
+import com.hitherejoe.androidboilerplate.data.model.Character;
 
 import uk.co.ribot.easyadapter.ItemViewHolder;
 import uk.co.ribot.easyadapter.PositionInfo;
 import uk.co.ribot.easyadapter.annotations.LayoutId;
 import uk.co.ribot.easyadapter.annotations.ViewId;
 
-@LayoutId(R.layout.item_boilerplate)
-public class BoilerplateHolder extends ItemViewHolder<Boilerplate> {
+@LayoutId(R.layout.item_character)
+public class CharacterHolder extends ItemViewHolder<Character> {
 
-    @ViewId(R.id.text_hello_world)
-    TextView mBoilerPlateText;
+    @ViewId(R.id.text_name)
+    TextView mNameText;
 
-    public BoilerplateHolder(View view) {
+    public CharacterHolder(View view) {
         super(view);
     }
 
     @Override
-    public void onSetValues(Boilerplate boilerplate, PositionInfo positionInfo) {
-        mBoilerPlateText.setText(boilerplate.androidBoilerplate);
+    public void onSetValues(Character character, PositionInfo positionInfo) {
+        mNameText.setText(character.name);
     }
 
     @Override
     public void onSetListeners() {
-        mBoilerPlateText.setOnClickListener(new View.OnClickListener() {
+        mNameText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

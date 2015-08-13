@@ -2,5 +2,8 @@
     <string name="app_name">AndroidBoilerPlate</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_github">View on GitHub</string>
+    <string name="text_view">View</string>
+
+
 </resources>
