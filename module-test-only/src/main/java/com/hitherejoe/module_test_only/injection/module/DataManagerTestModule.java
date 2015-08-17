@@ -1,4 +1,4 @@
-package com.hitherejoe.androidboilerplate.injection.module;
+package com.hitherejoe.module_test_only.injection.module;
 
 import android.content.Context;
 

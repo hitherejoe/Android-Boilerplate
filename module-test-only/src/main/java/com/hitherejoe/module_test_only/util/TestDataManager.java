@@ -1,13 +1,13 @@
-package com.hitherejoe.androidboilerplate.util;
+package com.hitherejoe.module_test_only.util;
 
 import android.content.Context;
 
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.data.DataManager;
 import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
-import com.hitherejoe.androidboilerplate.injection.component.DaggerDataManagerTestComponent;
-import com.hitherejoe.androidboilerplate.injection.component.TestComponent;
-import com.hitherejoe.androidboilerplate.injection.module.DataManagerTestModule;
+import com.hitherejoe.module_test_only.injection.component.DaggerDataManagerTestComponent;
+import com.hitherejoe.module_test_only.injection.component.TestComponent;
+import com.hitherejoe.module_test_only.injection.module.DataManagerTestModule;
 
 /**
  * Extension of DataManager to be used on a testing environment.

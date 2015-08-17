@@ -35,13 +35,12 @@ android {
 dependencies {
     final SUPPORT_LIBRARY_VERSION = '22.2.1'
     final DAGGER_VERSION = '2.0.1'
-    final DEXMAKER_VERSION = '1.2'
     final HAMCREST_VERSION = '1.3'
     final MOCKITO_VERSION = '1.10.19'
-    final ESPRESSO_VERSION = '2.2'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    compile 'com.android.support:support-v4:22.2.1'
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
@@ -54,6 +53,8 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup:otto:1.3.8'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'de.hdodenhof:circleimageview:1.3.0'
 
     compile 'io.reactivex:rxandroid:0.25.0'
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -63,22 +64,6 @@ dependencies {
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     apt      "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28'
-
-    androidTestCompile 'junit:junit:4.12'
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
-    androidTestCompile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-    androidTestCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
-    androidTestCompile 'com.android.support.test:runner:0.3'
-    androidTestCompile 'com.android.support.test:rules:0.3'
-    androidTestCompile "com.google.dexmaker:dexmaker:$DEXMAKER_VERSION"
-    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION") {
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude module: 'recyclerview-v7'
-    }
-
-    androidTestApt 'com.google.dagger:dagger-compiler:2.0.1'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"

@@ -1,4 +1,4 @@
-package com.hitherejoe.androidboilerplate.injection;
+package com.hitherejoe.module_test_only.injection;
 
 
 import android.support.test.InstrumentationRegistry;
@@ -6,10 +6,10 @@ import android.support.test.InstrumentationRegistry;
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.data.local.PreferencesHelper;
 import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
-import com.hitherejoe.androidboilerplate.injection.component.DaggerTestComponent;
-import com.hitherejoe.androidboilerplate.injection.component.TestComponent;
-import com.hitherejoe.androidboilerplate.injection.module.ApplicationTestModule;
-import com.hitherejoe.androidboilerplate.util.TestDataManager;
+import com.hitherejoe.module_test_only.injection.component.DaggerTestComponent;
+import com.hitherejoe.module_test_only.injection.component.TestComponent;
+import com.hitherejoe.module_test_only.injection.module.ApplicationTestModule;
+import com.hitherejoe.module_test_only.util.TestDataManager;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;

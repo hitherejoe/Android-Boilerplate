@@ -1,9 +1,9 @@
-package com.hitherejoe.androidboilerplate.injection.module;
+package com.hitherejoe.module_test_only.injection.module;
 
 import android.app.Application;
 
 import com.hitherejoe.androidboilerplate.data.DataManager;
-import com.hitherejoe.androidboilerplate.util.TestDataManager;
+import com.hitherejoe.module_test_only.util.TestDataManager;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;

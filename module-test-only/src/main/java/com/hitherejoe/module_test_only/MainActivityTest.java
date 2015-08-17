@@ -1,13 +1,17 @@
-package com.hitherejoe.androidboilerplate;
+package com.hitherejoe.module_test_only;
 
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.MediumTest;
 
 import com.hitherejoe.androidboilerplate.ui.activity.MainActivity;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
@@ -15,13 +19,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 @RunWith(AndroidJUnit4.class)
-@MediumTest
 public class MainActivityTest {
 
     private Context mContext;
@@ -36,10 +34,10 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testActivityDisplayed() throws Exception {
+    public void testActivityDisplayed() {
         Intent i = new Intent(getTargetContext(), MainActivity.class);
 
         main.launchActivity(i);
-        onView(withText(mContext.getString(R.string.hello_world))).check(matches(isDisplayed()));
+        onView(withText(mContext.getString(com.hitherejoe.androidboilerplate.R.string.app_name))).check(matches(isDisplayed()));
     }
 }
