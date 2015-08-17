@@ -20,10 +20,10 @@
             android:layout_height="wrap_content"
             android:background="@drawable/touchable_background_white">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image_character"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="16dp"
@@ -38,16 +38,18 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/black_87pc"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/text_identifier"
+                android:id="@+id/text_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_name"
                 android:layout_alignLeft="@id/text_name"
                 android:layout_marginBottom="24dp"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="16dp"
+                android:textColor="@color/black_87pc"/>
 
         </RelativeLayout>
 

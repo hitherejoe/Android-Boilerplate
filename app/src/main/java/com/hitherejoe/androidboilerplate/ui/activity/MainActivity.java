@@ -15,6 +15,9 @@ import com.hitherejoe.androidboilerplate.data.DataManager;
 import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.ui.adapter.CharacterHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
@@ -83,27 +86,33 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getAndroidBoilerPlates() {
-            mSubscriptions.add(mDataManager.getAndroidBoilerplates()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(mDataManager.getScheduler())
-                    .subscribe(new Subscriber<com.hitherejoe.androidboilerplate.data.model.Character>() {
-                        @Override
-                        public void onCompleted() {
-                            mProgressBar.setVisibility(View.GONE);
-                        }
+        int[] avengerIds = getResources().getIntArray(R.array.avengers);
+        List<Integer> list = new ArrayList<>(avengerIds.length);
+        for (int value : avengerIds) {
+            list.add(value);
+        }
+        mSubscriptions.add(mDataManager.getAvengers(list)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(mDataManager.getScheduler())
+                .subscribe(new Subscriber<com.hitherejoe.androidboilerplate.data.model.Character>() {
+                    @Override
+                    public void onCompleted() {
+                        mProgressBar.setVisibility(View.GONE);
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            mProgressBar.setVisibility(View.GONE);
-                            Timber.e("Error getting characters");
-                        }
+                    @Override
+                    public void onError(Throwable e) {
+                        mProgressBar.setVisibility(View.GONE);
+                        Timber.e("Error getting characters");
+                    }
 
-                        @Override
-                        public void onNext(Character character) {
-                            Timber.d(character.name);
-                            mEasyRecycleAdapter.addItem(character);
-                        }
-                    }));
+                    @Override
+                    public void onNext(Character character) {
+                        Timber.d(character.name);
+                        mEasyRecycleAdapter.addItem(character);
+                        mEasyRecycleAdapter.notifyDataSetChanged();
+                    }
+                }));
     }
 
 }

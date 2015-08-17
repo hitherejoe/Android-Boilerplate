@@ -5,5 +5,23 @@
     <string name="action_github">View on GitHub</string>
     <string name="text_view">View</string>
 
+    <integer-array name="avengers">
+        <item>1009610</item>
+        <item>1009368</item>
+        <item>1009351</item>
+        <item>1009338</item>
+        <item>1009664</item>
+        <item>1009187</item>
+        <item>1009189</item>
+        <item>1009220</item>
+        <item>1009297</item>
+        <item>1011490</item>
+        <item>1009215</item>
+        <item>1009524</item>
+        <item>1009562</item>
+        <item>1009697</item>
+        <item>1009707</item>
+        <item>1009719</item>
+    </integer-array>
 
 </resources>

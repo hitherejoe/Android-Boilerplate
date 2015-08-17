@@ -11,5 +11,9 @@ public class Character {
     public class Thumbnail {
         public String path;
         public String extension;
+
+        public String getImageUrl() {
+            return path + "." + extension;
+        }
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
 import com.hitherejoe.androidboilerplate.data.local.PreferencesHelper;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
 import com.hitherejoe.androidboilerplate.injection.component.DaggerDataManagerComponent;
@@ -60,14 +59,6 @@ public class DataManager {
         mAndroidBoilerplateService = androidBoilerplateService;
     }
 
-    public void setScheduler(Scheduler scheduler) {
-        mSubscribeScheduler = scheduler;
-    }
-
-    public DatabaseHelper getDatabaseHelper() {
-        return mDatabaseHelper;
-    }
-
     public PreferencesHelper getPreferencesHelper() {
         return mPreferencesHelper;
     }
@@ -76,19 +67,21 @@ public class DataManager {
         return mSubscribeScheduler;
     }
 
-    public Observable<Character> getAndroidBoilerplates() {
-        return mAndroidBoilerplateService.getCharacters(20)
-                .flatMapIterable(new Func1<AndroidBoilerplateService.CharacterResponse, Iterable<? extends Character>>() {
-                    @Override
-                    public Iterable<? extends Character> call(AndroidBoilerplateService.CharacterResponse characterResponse) {
-                        return characterResponse.data.results;
-                    }
-                }).concatMap(new Func1<Character, Observable<? extends Character>>() {
-                    @Override
-                    public Observable<? extends Character> call(Character character) {
-                        return Observable.just(character);
-                    }
-                });
+    public Observable<Character> getAvengers(List<Integer> avengerIds) {
+        return Observable.from(avengerIds).flatMap(new Func1<Integer, Observable<AndroidBoilerplateService.CharacterResponse>>() {
+            @Override
+            public Observable<AndroidBoilerplateService.CharacterResponse> call(Integer integer) {
+                return mAndroidBoilerplateService.getCharacter(integer);
+            }
+        }).flatMap(new Func1<AndroidBoilerplateService.CharacterResponse, Observable<Character>>() {
+            @Override
+            public Observable<Character> call(AndroidBoilerplateService.CharacterResponse characterResponse) {
+                if (characterResponse.data.results != null && !characterResponse.data.results.isEmpty()) {
+                    return Observable.just(characterResponse.data.results.get(0));
+                }
+                return Observable.empty();
+            }
+        });
     }
 
 }
