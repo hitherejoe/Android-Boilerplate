@@ -96,9 +96,7 @@ public class MainActivity extends BaseActivity {
                 .subscribeOn(mDataManager.getScheduler())
                 .subscribe(new Subscriber<com.hitherejoe.androidboilerplate.data.model.Character>() {
                     @Override
-                    public void onCompleted() {
-                        mProgressBar.setVisibility(View.GONE);
-                    }
+                    public void onCompleted() { }
 
                     @Override
                     public void onError(Throwable e) {
@@ -108,7 +106,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Character character) {
-                        Timber.d(character.name);
+                        mProgressBar.setVisibility(View.GONE);
                         mEasyRecycleAdapter.addItem(character);
                         mEasyRecycleAdapter.notifyDataSetChanged();
                     }

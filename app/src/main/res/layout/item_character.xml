@@ -49,6 +49,8 @@
                 android:layout_alignLeft="@id/text_name"
                 android:layout_marginBottom="24dp"
                 android:layout_marginRight="16dp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textColor="@color/black_87pc"/>
 
         </RelativeLayout>
@@ -73,6 +75,15 @@
                 android:background="@drawable/touchable_background_white"
                 android:textColor="@color/primary_text"
                 android:text="@string/text_view"/>
+
+            <TextView
+                style="@style/CardButtonTextStyle"
+                android:id="@+id/text_tab"
+                android:layout_toRightOf="@+id/text_view"
+                android:layout_alignBottom="@+id/text_view"
+                android:background="@drawable/touchable_background_white"
+                android:textColor="@color/primary_text"
+                android:text="@string/text_tab"/>
 
         </RelativeLayout>
 

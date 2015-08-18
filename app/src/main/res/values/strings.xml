@@ -1,9 +1,23 @@
 <resources>
     <string name="app_name">AndroidBoilerPlate</string>
 
-    <string name="hello_world">Hello world!</string>
+    <!-- Activity labels -->
+    <string name="label_main">Boilerplate</string>
+
     <string name="action_github">View on GitHub</string>
     <string name="text_view">View</string>
+    <string name="text_tab">Tab</string>
+    <string name="text_no_description">No description available</string>
+
+    <!-- Detail Fragment -->
+    <string name="text_no_data">No data to display</string>
+
+    <string-array name="detail_fragment_titles">
+        <item>Comics</item>
+        <item>Series</item>
+        <item>Stories</item>
+        <item>Events</item>
+    </string-array>
 
     <integer-array name="avengers">
         <item>1009610</item>
