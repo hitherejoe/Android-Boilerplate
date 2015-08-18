@@ -43,7 +43,7 @@ public class CharacterActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(mCharacter.name);
         }
     }
