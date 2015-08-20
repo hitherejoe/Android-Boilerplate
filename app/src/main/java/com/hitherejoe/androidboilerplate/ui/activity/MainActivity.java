@@ -13,17 +13,16 @@ import android.widget.ProgressBar;
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.DataManager;
+import com.hitherejoe.androidboilerplate.data.SyncService;
 import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.ui.adapter.CharacterHolder;
 import com.hitherejoe.androidboilerplate.util.DataUtils;
 import com.hitherejoe.androidboilerplate.util.DialogFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.RetrofitError;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -51,13 +50,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        applicationComponent().inject(this);
+        startService(SyncService.getStartIntent(this));
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mSubscriptions = new CompositeSubscription();
         mDataManager = AndroidBoilerplateApplication.get(this).getComponent().dataManager();
         setupToolbar();
         setupRecyclerView();
-        getCharacters();
+        loadCharacters();
     }
 
     @Override
@@ -96,31 +97,24 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 mEasyRecycleAdapter.setItems(new ArrayList<Character>());
-                getCharacters();
+                reSyncCharacters();
             }
         });
     }
 
-    private void getCharacters() {
+    private void reSyncCharacters() {
         if (DataUtils.isNetworkAvailable(this)) {
             int[] avengerIds = getResources().getIntArray(R.array.avengers);
-            List<Integer> list = new ArrayList<>(avengerIds.length);
-            for (int value : avengerIds) {
-                list.add(value);
-            }
-            mSubscriptions.add(mDataManager.getAvengers(list)
+            mSubscriptions.add(mDataManager.syncCharacters(avengerIds)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(mDataManager.getScheduler())
-                    .subscribe(new Subscriber<com.hitherejoe.androidboilerplate.data.model.Character>() {
+                    .subscribe(new Subscriber<Character>() {
                         @Override
-                        public void onCompleted() {
-
-                        }
+                        public void onCompleted() { }
 
                         @Override
                         public void onError(Throwable error) {
                             Timber.e("There was an error retrieving the characters " + error);
-                            error.printStackTrace();
                             mProgressBar.setVisibility(View.GONE);
                             mSwipeRefresh.setRefreshing(false);
                             DialogFactory.createSimpleErrorDialog(MainActivity.this).show();
@@ -143,6 +137,34 @@ public class MainActivity extends BaseActivity {
                     getString(R.string.dialog_error_no_connection)
             ).show();
         }
+    }
+
+    private void loadCharacters() {
+        mSubscriptions.add(mDataManager.loadCharacters()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(mDataManager.getScheduler())
+                .subscribe(new Subscriber<Character>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        Timber.e("There was an error retrieving the characters " + error);
+                        mProgressBar.setVisibility(View.GONE);
+                        mSwipeRefresh.setRefreshing(false);
+                        DialogFactory.createSimpleErrorDialog(MainActivity.this).show();
+                    }
+
+                    @Override
+                    public void onNext(Character character) {
+                        mProgressBar.setVisibility(View.GONE);
+                        mSwipeRefresh.setRefreshing(false);
+                        mEasyRecycleAdapter.addItem(character);
+                        mEasyRecycleAdapter.notifyDataSetChanged();
+                    }
+                }));
     }
 
 }

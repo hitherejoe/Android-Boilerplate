@@ -26,7 +26,7 @@ public class DetailFragment extends Fragment {
     RecyclerView mDetailRecycler;
 
     @Bind(R.id.text_no_data)
-    TextView mNoAttachmentsText;
+    TextView mNoDataText;
 
     private static final String ARG_ITEMS = "ARG_ITEMS";
     private List<Item> mItems;
@@ -44,7 +44,7 @@ public class DetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mItems = getArguments().getParcelableArrayList(ARG_ITEMS);
         if (mItems == null) {
-            throw new IllegalArgumentException("Alerts fragment requires a beacon instance!");
+            throw new IllegalArgumentException("DetailFragment requires a list of Item objects!");
         }
     }
 
@@ -62,7 +62,7 @@ public class DetailFragment extends Fragment {
         if (mItems != null && mItems.size() > 0) {
             mDetailRecycler.setAdapter(new EasyRecyclerAdapter<>(getActivity(), DetailHolder.class, mItems));
         } else {
-            mNoAttachmentsText.setVisibility(View.VISIBLE);
+            mNoDataText.setVisibility(View.VISIBLE);
             mDetailRecycler.setVisibility(View.GONE);
         }
     }

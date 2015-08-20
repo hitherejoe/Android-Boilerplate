@@ -1,12 +1,18 @@
 package com.hitherejoe.androidboilerplate;
 
 
+import android.database.Cursor;
+
 import com.hitherejoe.androidboilerplate.data.DataManager;
+import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
+import com.hitherejoe.androidboilerplate.data.local.Db;
+import com.hitherejoe.androidboilerplate.data.local.PreferencesHelper;
+import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
 import com.hitherejoe.androidboilerplate.util.DefaultConfig;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
+import com.squareup.otto.Bus;
 
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,52 +21,53 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Action1;
+import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, emulateSdk = DefaultConfig.EMULATE_SDK)
+@Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
 public class DataManagerTest {
 
     private DataManager mDataManager;
-    private AndroidBoilerplateService mBoilerplateService;
+    private AndroidBoilerplateService mMockAndroidBoilerplateService;
+    private DatabaseHelper mDatabaseHelper;
 
     @Before
     public void setUp() {
-        mDataManager = new DataManager(RuntimeEnvironment.application, Schedulers.immediate());
-        mBoilerplateService = mock(AndroidBoilerplateService.class);
-        mDataManager.setAndroidBoilerplateService(mBoilerplateService);
+        mMockAndroidBoilerplateService = mock(AndroidBoilerplateService.class);
+        mDatabaseHelper = new DatabaseHelper(RuntimeEnvironment.application);
+        mDataManager = new DataManager(mMockAndroidBoilerplateService,
+                mDatabaseHelper,
+                mock(Bus.class),
+                new PreferencesHelper(RuntimeEnvironment.application),
+                Schedulers.immediate());
     }
 
     @Test
-    public void shouldGetBookmarks() throws Exception {
-        Boilerplate mockBoilerplateOne = MockModelsUtil.createMockBoilerPlate();
-        Boilerplate mockBoilerplateTwo = MockModelsUtil.createMockBoilerPlate();
-        Boilerplate mockBoilerplateThree = MockModelsUtil.createMockBoilerPlate();
-        List<Boilerplate> boilerplates = new ArrayList<>();
-        boilerplates.add(mockBoilerplateOne);
-        boilerplates.add(mockBoilerplateTwo);
-        boilerplates.add(mockBoilerplateThree);
-        when(mBoilerplateService.getAndroidBoilerplates()).thenReturn(Observable.just(boilerplates));
+    public void shouldSyncCharacters() throws Exception {
+        int[] ids = RuntimeEnvironment.application.getResources().getIntArray(R.array.avengers);
+        List<Character> characters = MockModelsUtil.createListOfMockCharacters(ids);
+        for (Character character : characters) {
+            when(mMockAndroidBoilerplateService.getCharacter(character.id))
+                    .thenReturn(Observable.just(MockModelsUtil.createMockCharacterResponse(character)));
+        }
 
-        final List<Boilerplate> boilerplateList = new ArrayList<>();
-        mDataManager.getAndroidBoilerplates().subscribe(new Action1<Boilerplate>() {
-            @Override
-            public void call(Boilerplate story) {
-                boilerplateList.add(story);
-            }
-        });
-        Assert.assertEquals(3, boilerplateList.size());
-        Assert.assertTrue(boilerplateList.contains(mockBoilerplateOne));
-        Assert.assertTrue(boilerplateList.contains(mockBoilerplateTwo));
-        Assert.assertTrue(boilerplateList.contains(mockBoilerplateThree));
+        TestSubscriber<Character> result = new TestSubscriber<>();
+        mDataManager.syncCharacters(ids).subscribe(result);
+        result.assertNoErrors();
+        result.assertReceivedOnNext(characters);
+
+        Cursor cursor = mDatabaseHelper.getBriteDb()
+                .query("SELECT * FROM " + Db.CharacterTable.TABLE_NAME);
+        assertEquals(20, cursor.getCount());
+        cursor.close();
     }
 
 }

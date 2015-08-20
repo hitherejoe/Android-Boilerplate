@@ -3,6 +3,7 @@ package com.hitherejoe.androidboilerplate.injection.component;
 import android.app.Application;
 
 import com.hitherejoe.androidboilerplate.data.DataManager;
+import com.hitherejoe.androidboilerplate.data.SyncService;
 import com.hitherejoe.androidboilerplate.injection.module.ApplicationModule;
 import com.hitherejoe.androidboilerplate.ui.activity.MainActivity;
 import com.squareup.otto.Bus;
@@ -15,6 +16,7 @@ import dagger.Component;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
 
+    void inject(SyncService syncService);
     void inject(MainActivity mainActivity);
 
     Application application();

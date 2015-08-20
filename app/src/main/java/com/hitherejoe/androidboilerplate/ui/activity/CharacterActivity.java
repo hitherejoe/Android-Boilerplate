@@ -22,7 +22,7 @@ public class CharacterActivity extends BaseActivity {
     CollapsingToolbarLayout mCollapsingToolbar;
 
     private static final String EXTRA_CHARACTER =
-            "com.hitherejoe.watchtower.ui.activity.DetailActivity.EXTRA_CHARACTER";
+            "com.hitherejoe.androidboilerplate.ui.activity.CharacterActivity.EXTRA_CHARACTER";
     private Character mCharacter;
 
     public static Intent getStartIntent(Context context, Character character) {

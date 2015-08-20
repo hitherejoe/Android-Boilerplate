@@ -11,6 +11,7 @@ import com.hitherejoe.androidboilerplate.injection.component.DaggerDataManagerCo
 import com.hitherejoe.androidboilerplate.injection.module.DataManagerModule;
 import com.squareup.otto.Bus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -55,20 +56,31 @@ public class DataManager {
                 .inject(this);
     }
 
-    public void setAndroidBoilerplateService(AndroidBoilerplateService androidBoilerplateService) {
-        mAndroidBoilerplateService = androidBoilerplateService;
-    }
-
     public PreferencesHelper getPreferencesHelper() {
         return mPreferencesHelper;
+    }
+
+    public Scheduler getSubscribeScheduler() {
+        return mSubscribeScheduler;
     }
 
     public Scheduler getScheduler() {
         return mSubscribeScheduler;
     }
 
-    public Observable<Character> getAvengers(List<Integer> avengerIds) {
-        return Observable.from(avengerIds).concatMap(new Func1<Integer, Observable<AndroidBoilerplateService.CharacterResponse>>() {
+    public Observable<Character> syncCharacters(int[] ids) {
+        return getAvengers(ids).toList().concatMap(new Func1<List<Character>, Observable<? extends Character>>() {
+            @Override
+            public Observable<? extends Character> call(List<Character> characters) {
+                return mDatabaseHelper.setCharacters(characters);
+            }
+        });
+    }
+
+    public Observable<Character> getAvengers(int[] ids) {
+        List<Integer> characterIds = new ArrayList<>(ids.length);
+        for (int id : ids) characterIds.add(id);
+        return Observable.from(characterIds).concatMap(new Func1<Integer, Observable<AndroidBoilerplateService.CharacterResponse>>() {
             @Override
             public Observable<AndroidBoilerplateService.CharacterResponse> call(Integer integer) {
                 return mAndroidBoilerplateService.getCharacter(integer);
@@ -80,6 +92,20 @@ public class DataManager {
                     return Observable.just(characterResponse.data.results.get(0));
                 }
                 return Observable.empty();
+            }
+        });
+    }
+
+    public Observable<Character> loadCharacters() {
+        return mDatabaseHelper.getCharacters().concatMap(new Func1<List<Character>, Observable<? extends Character>>() {
+            @Override
+            public Observable<? extends Character> call(List<Character> characters) {
+                return Observable.from(characters);
+            }
+        }).concatMap(new Func1<Character, Observable<? extends Character>>() {
+            @Override
+            public Observable<? extends Character> call(Character character) {
+                return Observable.just(character);
             }
         });
     }

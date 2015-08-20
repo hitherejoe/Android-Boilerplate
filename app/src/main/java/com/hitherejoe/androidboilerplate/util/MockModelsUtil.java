@@ -5,6 +5,8 @@ import android.util.Log;
 import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.data.model.Collection;
 import com.hitherejoe.androidboilerplate.data.model.Item;
+import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
+import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService.CharacterResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,16 @@ public class MockModelsUtil {
             characters.add(createMockCharacter(id));
         }
         return characters;
+    }
+
+    public static CharacterResponse createMockCharacterResponse(Character character) {
+        AndroidBoilerplateService.CharacterResponse characterResponse = new AndroidBoilerplateService.CharacterResponse();
+        List<Character> list = new ArrayList<>();
+        list.add(character);
+        AndroidBoilerplateService.Data data = new AndroidBoilerplateService.Data();
+        data.results = list;
+        characterResponse.data = data;
+        return characterResponse;
     }
 
 }
