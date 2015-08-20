@@ -11,7 +11,7 @@ import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
@@ -22,8 +22,8 @@ import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK, manifest = DefaultConfig.MANIFEST)
 public class DatabaseHelperTest {
 
     private DatabaseHelper mDatabaseHelper;
@@ -31,11 +31,12 @@ public class DatabaseHelperTest {
     @Before
     public void setUp() {
         mDatabaseHelper = new DatabaseHelper(RuntimeEnvironment.application);
+        mDatabaseHelper.clearTables();
     }
 
     @Test
-    public void shouldSetRibots() throws Exception {
-        int[] ids = RuntimeEnvironment.application.getResources().getIntArray(R.array.avengers);
+    public void shouldSetCharacters() throws Exception {
+        int[] ids = new int[]{ 10034 };
         List<Character> characters = MockModelsUtil.createListOfMockCharacters(ids);
 
         TestSubscriber<Character> result = new TestSubscriber<>();
@@ -45,16 +46,16 @@ public class DatabaseHelperTest {
 
         Cursor cursor = mDatabaseHelper.getBriteDb()
                 .query("SELECT * FROM " + Db.CharacterTable.TABLE_NAME);
-        assertEquals(20, cursor.getCount());
-        for (Character ribot : characters) {
+        assertEquals(1, cursor.getCount());
+        for (Character character : characters) {
             cursor.moveToNext();
-            assertEquals(ribot, Db.CharacterTable.parseCursor(cursor));
+            assertEquals(character, Db.CharacterTable.parseCursor(cursor));
         }
     }
 
     @Test
-    public void shouldGetRibots() throws Exception {
-        int[] ids = RuntimeEnvironment.application.getResources().getIntArray(R.array.avengers);
+    public void shouldGetCharacters() throws Exception {
+        int[] ids = new int[]{ 10034 };
         List<Character> characters = MockModelsUtil.createListOfMockCharacters(ids);
 
         mDatabaseHelper.setCharacters(characters).subscribe();

@@ -14,6 +14,42 @@ public class Character implements Parcelable {
     public Collection stories;
     public Collection events;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Character character = (Character) o;
+
+        if (id != character.id) return false;
+        if (name != null ? !name.equals(character.name) : character.name != null) return false;
+        if (description != null ? !description.equals(character.description) : character.description != null)
+            return false;
+        if (thumbnail != null ? !thumbnail.equals(character.thumbnail) : character.thumbnail != null)
+            return false;
+        if (comics != null ? !comics.equals(character.comics) : character.comics != null)
+            return false;
+        if (series != null ? !series.equals(character.series) : character.series != null)
+            return false;
+        if (stories != null ? !stories.equals(character.stories) : character.stories != null)
+            return false;
+        return !(events != null ? !events.equals(character.events) : character.events != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
+        result = 31 * result + (comics != null ? comics.hashCode() : 0);
+        result = 31 * result + (series != null ? series.hashCode() : 0);
+        result = 31 * result + (stories != null ? stories.hashCode() : 0);
+        result = 31 * result + (events != null ? events.hashCode() : 0);
+        return result;
+    }
+
 
     public static class Thumbnail implements Parcelable {
         public String path;
@@ -50,6 +86,25 @@ public class Character implements Parcelable {
                 return new Thumbnail[size];
             }
         };
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Thumbnail thumbnail = (Thumbnail) o;
+
+            if (path != null ? !path.equals(thumbnail.path) : thumbnail.path != null) return false;
+            return !(extension != null ? !extension.equals(thumbnail.extension) : thumbnail.extension != null);
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = path != null ? path.hashCode() : 0;
+            result = 31 * result + (extension != null ? extension.hashCode() : 0);
+            return result;
+        }
     }
 
     @Override

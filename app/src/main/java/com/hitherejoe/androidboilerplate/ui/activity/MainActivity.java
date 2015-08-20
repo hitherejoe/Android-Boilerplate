@@ -104,8 +104,8 @@ public class MainActivity extends BaseActivity {
 
     private void reSyncCharacters() {
         if (DataUtils.isNetworkAvailable(this)) {
-            int[] avengerIds = getResources().getIntArray(R.array.avengers);
-            mSubscriptions.add(mDataManager.syncCharacters(avengerIds)
+            int[] characterIds = getResources().getIntArray(R.array.avengers);
+            mSubscriptions.add(mDataManager.syncCharacters(characterIds)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(mDataManager.getScheduler())
                     .subscribe(new Subscriber<Character>() {

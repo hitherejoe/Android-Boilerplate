@@ -17,7 +17,8 @@ import com.squareup.otto.Bus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
@@ -31,8 +32,8 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK, manifest = DefaultConfig.MANIFEST)
 public class DataManagerTest {
 
     private DataManager mDataManager;
@@ -52,7 +53,7 @@ public class DataManagerTest {
 
     @Test
     public void shouldSyncCharacters() throws Exception {
-        int[] ids = RuntimeEnvironment.application.getResources().getIntArray(R.array.avengers);
+        int[] ids = new int[]{ 10034, 14050, 10435, 35093 };
         List<Character> characters = MockModelsUtil.createListOfMockCharacters(ids);
         for (Character character : characters) {
             when(mMockAndroidBoilerplateService.getCharacter(character.id))
@@ -66,7 +67,7 @@ public class DataManagerTest {
 
         Cursor cursor = mDatabaseHelper.getBriteDb()
                 .query("SELECT * FROM " + Db.CharacterTable.TABLE_NAME);
-        assertEquals(20, cursor.getCount());
+        assertEquals(4, cursor.getCount());
         cursor.close();
     }
 

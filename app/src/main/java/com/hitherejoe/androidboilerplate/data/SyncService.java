@@ -55,12 +55,9 @@ public class SyncService extends Service {
         }
 
         if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
-        int[] ids = getResources().getIntArray(R.array.avengers);
-        List<Integer> idList = new ArrayList<>();
-        for (int id : ids) {
-            idList.add(id);
-        }
-        mSubscription = mDataManager.syncCharacters(idList)
+        int[] characterIds = getResources().getIntArray(R.array.avengers);
+
+        mSubscription = mDataManager.syncCharacters(characterIds)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(mDataManager.getSubscribeScheduler())
                 .subscribe(new Observer<Character>() {
