@@ -12,9 +12,6 @@ import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.util.AndroidComponentUtil;
 import com.hitherejoe.androidboilerplate.util.NetworkUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import rx.Observer;

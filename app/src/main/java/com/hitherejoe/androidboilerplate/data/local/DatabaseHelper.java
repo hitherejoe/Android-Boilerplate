@@ -2,7 +2,6 @@ package com.hitherejoe.androidboilerplate.data.local;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.squareup.sqlbrite.BriteDatabase;

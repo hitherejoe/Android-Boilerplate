@@ -48,7 +48,6 @@ public class CharacterHolder extends ItemViewHolder<Character> {
         mDescriptionText.setText(filmCount == 0 ? getContext().getString(R.string.text_no_description) : description);
         Glide.with(getContext())
                 .load(getImageUrl(character.name))
-            //    .placeholder(R.drawable.loading_spinner)
                 .into(mCharacterImage);
     }
 
@@ -77,6 +76,7 @@ public class CharacterHolder extends ItemViewHolder<Character> {
     }
 
     private String getImageUrl(String name) {
+        // Ugly, but the API doesn't provide images - so this is just for example image loading
         switch (name.toLowerCase()) {
             case "luke skywalker":
                 return "http://img3.wikia.nocookie.net/__cb20091030151422/starwars/images/d/d9/Luke-rotjpromo.jpg";

@@ -1,7 +1,5 @@
 package com.hitherejoe.androidboilerplate.data.remote;
 
-import android.content.Context;
-
 import com.google.gson.GsonBuilder;
 
 import retrofit.RequestInterceptor;
