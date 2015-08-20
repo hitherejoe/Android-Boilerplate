@@ -1,21 +1,26 @@
 Android Boilerplate
 ===================
 
-A simple boilerplate application which demonstrates the downloading, persisting and syncing of data - displayed with a common layout used amongst applications.
+<p align="center">
+    <img src="images/ic_web.png" alt="Web Launcher"/>
+</p>
 
-The project is setup to use:
+A simple boilerplate application which demonstrates the downloading, persisting and syncing of data - displayed with a common layout used amongst applications. It features the use of the Design Support library, data caching and the new Test Modules, separating the functional tests from production code.
 
-- Espresso automated tests, contained in a seperate androidTest module
-- Robolectric Unit tests
-- Dagger 2 for dependancy injection
-- Networking using retrofit with Rx Java
-- Database management using Rx java, SQLBrite and pure SQLite
-- Data Sync Service
-- Design Support library integrated for Material Style view animations (includes TabLayout, CollapsingToolbar & CoordinatorLayout implementations)
-- Holders (adapters) for recycler views using EasyAdapter
-- Butterknife for easy view injection
-- Glide for easy image downloading / display
-- Timber for simple Debug logging
+The project is setup using:
+
+- Functional test Module with [Espresso](https://code.google.com/p/android-test-kit/wiki/Espresso)
+- Unit tests with [Robolectric](http://robolectric.org/) 
+- [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
+- [Retrofit](http://square.github.io/retrofit/) and [OkHttp](https://github.com/square/okhttp)
+- [Dagger 2](http://google.github.io/dagger/)
+- [SqlBrite](https://github.com/square/sqlbrite)
+- [EasyAdapter](https://github.com/ribot/easy-adapter)
+- [Butterknife](https://github.com/JakeWharton/butterknife)
+- [Timber] (https://github.com/JakeWharton/timber)
+- [Mockito](http://mockito.org/)
+- [Glide](https://github.com/bumptech/glide)
+
 
 Requirements
 ------------
