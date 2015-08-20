@@ -21,6 +21,10 @@ The project is setup using:
 - [Mockito](http://mockito.org/)
 - [Glide](https://github.com/bumptech/glide)
 
+<p align="center">
+    <img src="images/device.png" alt="Web Launcher"/>
+</p>
+
 
 Requirements
 ------------
