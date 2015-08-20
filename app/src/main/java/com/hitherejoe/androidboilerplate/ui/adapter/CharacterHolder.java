@@ -19,6 +19,9 @@ import uk.co.ribot.easyadapter.annotations.ViewId;
 @LayoutId(R.layout.item_character)
 public class CharacterHolder extends ItemViewHolder<Character> {
 
+    @ViewId(R.id.container_character)
+    View mCharacterContainer;
+
     @ViewId(R.id.text_name)
     TextView mNameText;
 
@@ -43,8 +46,10 @@ public class CharacterHolder extends ItemViewHolder<Character> {
         mNameText.setText(character.name);
         String description = character.description.trim();
         mDescriptionText.setText(description.isEmpty() ? getContext().getString(R.string.text_no_description) : description);
-        Timber.e(character.thumbnail.getImageUrl());
-        Glide.with(getContext()).load(character.thumbnail.getImageUrl()).into(mCharacterImage);
+        Glide.with(getContext())
+                .load(character.thumbnail.getImageUrl())
+              //  .placeholder(R.drawable.loading_spinner)
+                .into(mCharacterImage);
     }
 
     @Override
@@ -52,14 +57,21 @@ public class CharacterHolder extends ItemViewHolder<Character> {
         mViewText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContext().startActivity(DetailActivity.getStartIntent(getContext(), getItem()));
+                getContext().startActivity(CharacterActivity.getStartIntent(getContext(), getItem()));
+            }
+        });
+
+        mCharacterContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getContext().startActivity(CharacterActivity.getStartIntent(getContext(), getItem()));
             }
         });
 
         mTabText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContext().startActivity(CharacterActivity.getStartIntent(getContext(), getItem()));
+                getContext().startActivity(DetailActivity.getStartIntent(getContext(), getItem()));
             }
         });
     }

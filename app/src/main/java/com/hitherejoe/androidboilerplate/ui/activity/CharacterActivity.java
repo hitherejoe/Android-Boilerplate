@@ -3,6 +3,7 @@ package com.hitherejoe.androidboilerplate.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
@@ -16,6 +17,9 @@ public class CharacterActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+
+    @Bind(R.id.toolbar_collapsing)
+    CollapsingToolbarLayout mCollapsingToolbar;
 
     private static final String EXTRA_CHARACTER =
             "com.hitherejoe.watchtower.ui.activity.DetailActivity.EXTRA_CHARACTER";
@@ -44,7 +48,7 @@ public class CharacterActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(mCharacter.name);
+            mCollapsingToolbar.setTitle(mCharacter.name);
         }
     }
 

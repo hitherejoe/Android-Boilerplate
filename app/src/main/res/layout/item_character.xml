@@ -82,8 +82,8 @@
                 android:layout_toRightOf="@+id/text_view"
                 android:layout_alignBottom="@+id/text_view"
                 android:background="@drawable/touchable_background_white"
-                android:textColor="@color/primary_text"
-                android:text="@string/text_tab"/>
+                android:textColor="@color/primary"
+                android:text="@string/text_collections"/>
 
         </RelativeLayout>
 

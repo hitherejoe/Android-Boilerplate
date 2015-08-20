@@ -59,7 +59,12 @@ public class DetailFragment extends Fragment {
 
     private void setupRecyclerView() {
         mDetailRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mDetailRecycler.setAdapter(new EasyRecyclerAdapter<>(getActivity(), DetailHolder.class, mItems));
+        if (mItems != null && mItems.size() > 0) {
+            mDetailRecycler.setAdapter(new EasyRecyclerAdapter<>(getActivity(), DetailHolder.class, mItems));
+        } else {
+            mNoAttachmentsText.setVisibility(View.VISIBLE);
+            mDetailRecycler.setVisibility(View.GONE);
+        }
     }
 
 }

@@ -16,9 +16,4 @@ public class DataUtils {
         return connectivityManager.getActiveNetworkInfo() != null;
     }
 
-    public static ErrorResponse parseRetrofitError(Throwable error) {
-        String json = new String(((TypedByteArray) ((RetrofitError) error).getResponse().getBody()).getBytes());
-        return new Gson().fromJson(json, ErrorResponse.class);
-    }
-
 }

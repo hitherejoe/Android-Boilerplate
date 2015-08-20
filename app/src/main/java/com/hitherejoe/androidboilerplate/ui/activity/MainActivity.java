@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.RetrofitError;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -113,17 +114,22 @@ public class MainActivity extends BaseActivity {
                     .subscribe(new Subscriber<com.hitherejoe.androidboilerplate.data.model.Character>() {
                         @Override
                         public void onCompleted() {
+
                         }
 
                         @Override
-                        public void onError(Throwable e) {
+                        public void onError(Throwable error) {
+                            Timber.e("There was an error retrieving the characters " + error);
+                            error.printStackTrace();
                             mProgressBar.setVisibility(View.GONE);
-                            Timber.e("Error getting characters");
+                            mSwipeRefresh.setRefreshing(false);
+                            DialogFactory.createSimpleErrorDialog(MainActivity.this).show();
                         }
 
                         @Override
                         public void onNext(Character character) {
                             mProgressBar.setVisibility(View.GONE);
+                            mSwipeRefresh.setRefreshing(false);
                             mEasyRecycleAdapter.addItem(character);
                             mEasyRecycleAdapter.notifyDataSetChanged();
                         }

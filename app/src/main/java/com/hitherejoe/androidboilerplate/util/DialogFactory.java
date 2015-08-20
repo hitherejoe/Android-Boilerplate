@@ -29,11 +29,6 @@ public class DialogFactory {
         return alertDialog.create();
     }
 
-    public static Dialog createRetrofitErrorDialog(Context context, RetrofitError error) {
-        ErrorResponse errorResponse = DataUtils.parseRetrofitError(error);
-        return createSimpleOkErrorDialog(context, "Error: " + errorResponse.error.code, errorResponse.error.message);
-    }
-
     public static ProgressDialog createProgressDialog(Context context, String message) {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(message);
