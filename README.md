@@ -1,21 +1,21 @@
 Android Boilerplate
 ===================
 
-After finding no examples online of Espresso / Robolectric setup in Android Studio with the new Unit Testing feature
-(without using a third party plugin) I decided to create this boilerplate project to document the setup. After 
-recreating the same project setup over and over again I decided it was also about time to do so! The project structure is as follows:
+A simple boilerplate application which demonstrates the downloading, persisting and syncing of data - displayed with a common layout used amongst applications.
 
-<p align="center"><img src="http://i617.photobucket.com/albums/tt254/joeyerrr/project_structure.png" /></p>
+The project is setup to use:
 
-All ready to go with:
-
-- Espresso testing
-- Robolectric testing
-- Network requests using retrofit and Rx Java
-- Database management using Rx java and pure SQLite
-- Holders for list items using EasyAdapter
+- Espresso automated tests, contained in a seperate androidTest module
+- Robolectric Unit tests
+- Dagger 2 for dependancy injection
+- Networking using retrofit with Rx Java
+- Database management using Rx java, SQLBrite and pure SQLite
+- Data Sync Service
+- Design Support library integrated for Material Style view animations (includes TabLayout, CollapsingToolbar & CoordinatorLayout implementations)
+- Holders (adapters) for recycler views using EasyAdapter
 - Butterknife for easy view injection
-- Picasso for easy image downloading / display
+- Glide for easy image downloading / display
+- Timber for simple Debug logging
 
 Requirements
 ------------
@@ -23,10 +23,9 @@ Requirements
  - [Android SDK](http://developer.android.com/sdk/index.html).
  - Android [5.1 (API 22) ](http://developer.android.com/tools/revisions/platforms.html#5.1).
  - Android SDK Tools
- - Android SDK Build tools 22.0.1 
+ - Android SDK Build tools 23.0.0.0 rc3
  - Android Support Repository
  - Android Support library
- - Enabled [Unit Test support] (http://tools.android.com/tech-docs/unit-testing-support)
 
 Building
 --------

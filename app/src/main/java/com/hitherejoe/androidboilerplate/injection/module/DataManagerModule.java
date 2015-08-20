@@ -40,7 +40,7 @@ public class DataManagerModule {
     @Provides
     @PerDataManager
     AndroidBoilerplateService provideAndroidBoilerplateService() {
-        return new RetrofitHelper().newAndroidBoilerplateService(mContext);
+        return new RetrofitHelper().newAndroidBoilerplateService();
     }
 
     @Provides

@@ -24,8 +24,6 @@ import timber.log.Timber;
 
 public class SyncService extends Service {
 
-    public static final String TAG = "SyncService";
-
     @Inject DataManager mDataManager;
     private Subscription mSubscription;
 
@@ -55,7 +53,7 @@ public class SyncService extends Service {
         }
 
         if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
-        int[] characterIds = getResources().getIntArray(R.array.avengers);
+        int[] characterIds = getResources().getIntArray(R.array.characters);
 
         mSubscription = mDataManager.syncCharacters(characterIds)
                 .observeOn(AndroidSchedulers.mainThread())

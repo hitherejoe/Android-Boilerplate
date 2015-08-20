@@ -10,16 +10,9 @@ import rx.Observable;
 
 public interface AndroidBoilerplateService {
 
-    String ENDPOINT = "http://gateway.marvel.com:80/v1/public";
+    String ENDPOINT = "http://swapi.co/api";
 
-    @GET("/characters/{characterId}")
-    Observable<CharacterResponse> getCharacter(@Path("characterId") int id);
+    @GET("/people/{personId}")
+    Observable<Character> getCharacter(@Path("personId") int id);
 
-    class CharacterResponse {
-        public Data data;
-    }
-
-    class Data {
-        public List<Character> results;
-    }
 }

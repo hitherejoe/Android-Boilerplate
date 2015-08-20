@@ -69,7 +69,7 @@ public class DataManager {
     }
 
     public Observable<Character> syncCharacters(int[] ids) {
-        return getAvengers(ids).toList().concatMap(new Func1<List<Character>, Observable<? extends Character>>() {
+        return getCharacters(ids).toList().concatMap(new Func1<List<Character>, Observable<? extends Character>>() {
             @Override
             public Observable<? extends Character> call(List<Character> characters) {
                 return mDatabaseHelper.setCharacters(characters);
@@ -77,21 +77,13 @@ public class DataManager {
         });
     }
 
-    public Observable<Character> getAvengers(int[] ids) {
+    public Observable<Character> getCharacters(int[] ids) {
         List<Integer> characterIds = new ArrayList<>(ids.length);
         for (int id : ids) characterIds.add(id);
-        return Observable.from(characterIds).concatMap(new Func1<Integer, Observable<AndroidBoilerplateService.CharacterResponse>>() {
+        return Observable.from(characterIds).concatMap(new Func1<Integer, Observable<Character>>() {
             @Override
-            public Observable<AndroidBoilerplateService.CharacterResponse> call(Integer integer) {
+            public Observable<Character> call(Integer integer) {
                 return mAndroidBoilerplateService.getCharacter(integer);
-            }
-        }).concatMap(new Func1<AndroidBoilerplateService.CharacterResponse, Observable<Character>>() {
-            @Override
-            public Observable<Character> call(AndroidBoilerplateService.CharacterResponse characterResponse) {
-                if (characterResponse.data.results != null && !characterResponse.data.results.isEmpty()) {
-                    return Observable.just(characterResponse.data.results.get(0));
-                }
-                return Observable.empty();
             }
         });
     }
@@ -107,7 +99,7 @@ public class DataManager {
             public Observable<? extends Character> call(Character character) {
                 return Observable.just(character);
             }
-        });
+        }).distinct();
     }
 
 }

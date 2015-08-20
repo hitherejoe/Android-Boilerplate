@@ -10,21 +10,25 @@
     <string name="text_view">View</string>
     <string name="text_collections">Collections</string>
     <string name="text_no_description">No description available</string>
+    <string name="text_films_description">%d films</string>
 
     <!-- Character Activity -->
 
-    <string name="text_lorem_ipsum">The classic adventures of Spider-Man from the early days up until the 90s. This is where youll find all the big-time action, major storylines and iconic Spider-Man magic youd come to expect from the Wall-Crawler. Now, hes a premiere member of both the X-Men and the Avengers. Born with super-human senses and the power to heal from almost any wound, Wolverine was captured by a secret Canadian organization and given an unbreakable skeleton and claws. Youve found it.\n\n
-    Looking for the one superhero comic you just have to read. The classic adventures of Spider-Man from the early days up until the 90s. Youve found it. Born with super-human senses and the power to heal from almost any wound, Wolverine was captured by a secret Canadian organization and given an unbreakable skeleton and claws. Treated like an animal, it took years for him to control himself.\n\n
-    Treated like an animal, it took years for him to control himself. Meet all of Spideys deadly enemies, from the Green Goblin and Doctor Octopus to Venom and Carnage, plus see Peter Parker fall in love, face tragedy and triumph, and learn that with great power comes great responsibility. Now, hes a premiere member of both the X-Men and the Avengers. Marvels mighty mutants go worldwide and beyond in this series following Cyclops, Wolverine, Beast, Emma Frost and more in their astonishing adventures. Youve found it.\n\n
-    Meet all of Spideys deadly enemies, from the Green Goblin and Doctor Octopus to Venom and Carnage, plus see Peter Parker fall in love, face tragedy and triumph, and learn that with great power comes great responsibility. This is where youll find all the big-time action, major storylines and iconic Spider-Man magic youd come to expect from the Wall-Crawler. Youve found it. Now, hes a premiere member of both the X-Men and the Avengers. Amazing Spider-Man is the cornerstone of the Marvel Universe.</string>
-
+    <string name="text_lorem_ipsum">
+    Don\'t underestimate the Force. The Force is strong with this one. I have you now. He is here. \n \n
+    I suggest you try it again, Luke. This time, let go your conscious self and act on instinct. The more you tighten your grip, Tarkin, the more star systems will slip through your fingers. I\'m trying not to, kid. Red Five standing by.\n \n
+    I care. So, what do you think of her, Han? Obi-Wan is here. The Force is with him. I\'m surprised you had the courage to take the responsibility yourself. Red Five standing by. I need your help, Luke. She needs your help. I\'m getting too old for this sort of thing.\n \n
+    What!? All right. Well, take care of yourself, Han. I guess that\'s what you\'re best at, ain\'t it? I don\'t know what you\'re talking about. I am a member of the Imperial Senate on a diplomatic mission to Alderaan, Red Five standing by.\n \n
+    I suggest you try it again, Luke. This time, let go your conscious self and act on instinct. I want to come with you to Alderaan. There\'s nothing for me here now. I want to learn the ways of the Force and be a Jedi, like my father before me. She must have hidden the plans in the escape pod. Send a detachment down to retrieve them, and see to it personally, Commander. There\'ll be no one to stop us this time! Obi-Wan is here. The Force is with him.\n \n
+    Hey, Luke! May the Force be with you. Alderaan? I\'m not going to Alderaan. I\'ve got to go home. It\'s late, I\'m in for it as it is. Obi-Wan is here. The Force is with him. Don\'t be too proud of this technological terror you\'ve constructed. The ability to destroy a planet is insignificant next to the power of the Force. She must have hidden the plans in the escape pod. Send a detachment down to retrieve them, and see to it personally, Commander. There\'ll be no one to stop us this time!\n \n
+    </string>
     <!-- Detail Fragment -->
 
     <string-array name="detail_fragment_titles">
-        <item>Comics</item>
-        <item>Series</item>
-        <item>Stories</item>
-        <item>Events</item>
+        <item>Films</item>
+        <item>Vehicles</item>
+        <item>Species</item>
+        <item>Starships</item>
     </string-array>
 
     <string name="text_no_data">No data to display</string>
@@ -41,23 +45,13 @@
 
 
 
-    <integer-array name="avengers">
-        <item>1009610</item>
-        <item>1009368</item>
-        <item>1009351</item>
-        <item>1009338</item>
-        <item>1009664</item>
-        <item>1009187</item>
-        <item>1009189</item>
-        <item>1009220</item>
-        <item>1009297</item>
-        <item>1011490</item>
-        <item>1009215</item>
-        <item>1009524</item>
-        <item>1009562</item>
-        <item>1009697</item>
-        <item>1009707</item>
-        <item>1009719</item>
+    <integer-array name="characters">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
     </integer-array>
 
 </resources>

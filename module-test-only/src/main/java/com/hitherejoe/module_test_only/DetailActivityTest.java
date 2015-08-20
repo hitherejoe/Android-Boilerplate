@@ -9,7 +9,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.model.Character;
-import com.hitherejoe.androidboilerplate.data.model.Item;
 import com.hitherejoe.androidboilerplate.ui.activity.DetailActivity;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
 import com.hitherejoe.module_test_only.injection.TestComponentRule;
@@ -47,23 +46,23 @@ public class DetailActivityTest {
 
     @Test
     public void testCharacterCollectionsDisplayed() {
-        int[] characterIds =
-                InstrumentationRegistry.getTargetContext().getResources().getIntArray(R.array.avengers);
-        Character mockCharacter = MockModelsUtil.createMockCharacter(characterIds[0]);
+        Character mockCharacter = MockModelsUtil.createMockCharacter();
         Intent i = DetailActivity.getStartIntent(mContext, mockCharacter);
         main.launchActivity(i);
-        checkTextIsShownInTab("Comics", mockCharacter.comics.items);
-        checkTextIsShownInTab("Series", mockCharacter.series.items);
-        checkTextIsShownInTab("Stories", mockCharacter.stories.items);
-        checkTextIsShownInTab("Events", mockCharacter.events.items);
+        String[] tabTitles =
+                InstrumentationRegistry.getTargetContext().getResources().getStringArray(com.hitherejoe.androidboilerplate.R.array.detail_fragment_titles);
+        checkTextIsShownInTab(tabTitles[0], mockCharacter.films);
+        checkTextIsShownInTab(tabTitles[1], mockCharacter.vehicles);
+        checkTextIsShownInTab(tabTitles[2], mockCharacter.species);
+        checkTextIsShownInTab(tabTitles[3], mockCharacter.starships);
     }
 
-    private void checkTextIsShownInTab(String tab, List<Item> items) {
+    private void checkTextIsShownInTab(String tab, List<String> items) {
         onView(withText(tab)).perform(click());
         if (items.isEmpty()) {
             onView(withText(R.string.text_no_data)).check(matches(isDisplayed()));
         } else {
-            for (Item item : items) onView(withText(item.name)).check(matches(isDisplayed()));
+            for (String item : items) onView(withText(item)).check(matches(isDisplayed()));
         }
     }
 

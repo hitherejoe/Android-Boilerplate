@@ -10,7 +10,6 @@ import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.ui.activity.CharacterActivity;
 import com.hitherejoe.androidboilerplate.ui.activity.DetailActivity;
 
-import timber.log.Timber;
 import uk.co.ribot.easyadapter.ItemViewHolder;
 import uk.co.ribot.easyadapter.PositionInfo;
 import uk.co.ribot.easyadapter.annotations.LayoutId;
@@ -44,11 +43,12 @@ public class CharacterHolder extends ItemViewHolder<Character> {
     @Override
     public void onSetValues(Character character, PositionInfo positionInfo) {
         mNameText.setText(character.name);
-        String description = character.description.trim();
-        mDescriptionText.setText(description.isEmpty() ? getContext().getString(R.string.text_no_description) : description);
+        int filmCount = character.films.size();
+        String description = getContext().getString(R.string.text_films_description, filmCount);
+        mDescriptionText.setText(filmCount == 0 ? getContext().getString(R.string.text_no_description) : description);
         Glide.with(getContext())
-                .load(character.thumbnail.getImageUrl())
-              //  .placeholder(R.drawable.loading_spinner)
+                .load(getImageUrl(character.name))
+            //    .placeholder(R.drawable.loading_spinner)
                 .into(mCharacterImage);
     }
 
@@ -74,5 +74,20 @@ public class CharacterHolder extends ItemViewHolder<Character> {
                 getContext().startActivity(DetailActivity.getStartIntent(getContext(), getItem()));
             }
         });
+    }
+
+    private String getImageUrl(String name) {
+        switch (name.toLowerCase()) {
+            case "luke skywalker":
+                return "http://img3.wikia.nocookie.net/__cb20091030151422/starwars/images/d/d9/Luke-rotjpromo.jpg";
+            case "c-3po":
+                return "http://img2.wikia.nocookie.net/__cb20131005124036/starwars/images/thumb/5/51/C-3PO_EP3.png/400px-C-3PO_EP3.png";
+            case "r2-d2":
+                return "http://img1.wikia.nocookie.net/__cb20090524204255/starwars/images/thumb/1/1a/R2d2.jpg/400px-R2d2.jpg";
+            case "darth vader":
+                return "http://img2.wikia.nocookie.net/__cb20130621175844/starwars/images/thumb/6/6f/Anakin_Skywalker_RotS.png/400px-Anakin_Skywalker_RotS.png";
+            default:
+                return "http://img2.wikia.nocookie.net/__cb20130221005853/starwars/images/thumb/9/9d/DSI_hdapproach.png/400px-DSI_hdapproach.png";
+        }
     }
 }

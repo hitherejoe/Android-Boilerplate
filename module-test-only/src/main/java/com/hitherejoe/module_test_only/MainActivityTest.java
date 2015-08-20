@@ -1,7 +1,6 @@
 package com.hitherejoe.module_test_only;
 
 
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -9,12 +8,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.hitherejoe.androidboilerplate.data.model.Character;
-import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
 import com.hitherejoe.androidboilerplate.ui.activity.MainActivity;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
 import com.hitherejoe.module_test_only.injection.TestComponentRule;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +21,6 @@ import java.util.List;
 
 import rx.Observable;
 
-import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -48,7 +44,7 @@ public class MainActivityTest {
     @Test
     public void testCharactersShowAndAreScrollableInFeed() {
         int[] characterIds =
-                InstrumentationRegistry.getTargetContext().getResources().getIntArray(com.hitherejoe.androidboilerplate.R.array.avengers);
+                InstrumentationRegistry.getTargetContext().getResources().getIntArray(com.hitherejoe.androidboilerplate.R.array.characters);
         List<Character> mockCharacters = MockModelsUtil.createListOfMockCharacters(characterIds);
         stubMockPosts(characterIds, mockCharacters);
         main.launchActivity(null);
@@ -58,10 +54,9 @@ public class MainActivityTest {
     @Test
     public void testCharactersNoDescriptionIsShown() {
         when(component.getMockWatchTowerService().getCharacter(anyInt()))
-                .thenReturn(Observable.<AndroidBoilerplateService.CharacterResponse>empty());
-        int[] characterIds = new int[1];
-        characterIds[0] = 1009610;
-        Character mockCharacter = MockModelsUtil.createMockCharacter(1009610);
+                .thenReturn(Observable.<Character>empty());
+        int[] characterIds = new int[]{ 1 };
+        Character mockCharacter = MockModelsUtil.createMockCharacter();
         List<Character> mockCharacters = new ArrayList<>();
         mockCharacters.add(mockCharacter);
         stubMockPosts(characterIds, mockCharacters);
@@ -72,7 +67,7 @@ public class MainActivityTest {
     @Test
     public void testClickOnCardOpensCharacterActivity() {
         int[] characterIds =
-                InstrumentationRegistry.getTargetContext().getResources().getIntArray(com.hitherejoe.androidboilerplate.R.array.avengers);
+                InstrumentationRegistry.getTargetContext().getResources().getIntArray(com.hitherejoe.androidboilerplate.R.array.characters);
         List<Character> mockCharacters = MockModelsUtil.createListOfMockCharacters(characterIds);
         stubMockPosts(characterIds, mockCharacters);
         main.launchActivity(null);
@@ -85,10 +80,9 @@ public class MainActivityTest {
     @Test
     public void testClickOnView() {
         when(component.getMockWatchTowerService().getCharacter(anyInt()))
-                .thenReturn(Observable.<AndroidBoilerplateService.CharacterResponse>empty());
-        int[] characterIds = new int[1];
-        characterIds[0] = 1009610;
-        Character mockCharacter = MockModelsUtil.createMockCharacter(1009610);
+                .thenReturn(Observable.<Character>empty());
+        int[] characterIds = new int[]{ 1 };
+        Character mockCharacter = MockModelsUtil.createMockCharacter();
         List<Character> mockCharacters = new ArrayList<>();
         mockCharacters.add(mockCharacter);
         stubMockPosts(characterIds, mockCharacters);
@@ -102,10 +96,9 @@ public class MainActivityTest {
     @Test
     public void testClickOnCollections() {
         when(component.getMockWatchTowerService().getCharacter(anyInt()))
-                .thenReturn(Observable.<AndroidBoilerplateService.CharacterResponse>empty());
-        int[] characterIds = new int[1];
-        characterIds[0] = 1009610;
-        Character mockCharacter = MockModelsUtil.createMockCharacter(1009610);
+                .thenReturn(Observable.<Character>empty());
+        int[] characterIds = new int[]{ 1 };
+        Character mockCharacter = MockModelsUtil.createMockCharacter();
         List<Character> mockCharacters = new ArrayList<>();
         mockCharacters.add(mockCharacter);
         stubMockPosts(characterIds, mockCharacters);
@@ -125,16 +118,19 @@ public class MainActivityTest {
     }
 
     private void checkPostDisplays(Character character) {
+        String films =
+                InstrumentationRegistry.getTargetContext().getResources().getString(com.hitherejoe.androidboilerplate.R.string.text_films_description, character.films.size());
+        String noDescription = InstrumentationRegistry.getTargetContext().getResources().getString(com.hitherejoe.androidboilerplate.R.string.text_no_description);
         onView(withText(character.name))
                 .check(matches(isDisplayed()));
-        onView(withText(character.description))
+        onView(withText(character.films.size() == 0 ? noDescription : films))
                 .check(matches(isDisplayed()));
     }
 
     private void stubMockPosts(int[] ids, List<Character> mockPosts) {
         for (int i = 0; i < mockPosts.size(); i++) {
             when(component.getMockWatchTowerService().getCharacter(ids[i]))
-                    .thenReturn(Observable.just(MockModelsUtil.createMockCharacterResponse(mockPosts.get(i))));
+                    .thenReturn(Observable.just(MockModelsUtil.createMockCharacter()));
         }
     }
 }

@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.model.Character;
-import com.hitherejoe.androidboilerplate.data.model.Item;
 import com.hitherejoe.androidboilerplate.ui.fragment.DetailFragment;
 
 import java.util.ArrayList;
@@ -73,15 +72,15 @@ public class DetailActivity extends BaseActivity {
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return DetailFragment.newInstance((ArrayList<Item>) mCharacter.comics.items);
+                        return DetailFragment.newInstance((ArrayList<String>) mCharacter.films);
                     case 1:
-                        return DetailFragment.newInstance((ArrayList<Item>) mCharacter.series.items);
+                        return DetailFragment.newInstance((ArrayList<String>) mCharacter.vehicles);
                     case 2:
-                        return DetailFragment.newInstance((ArrayList<Item>) mCharacter.stories.items);
+                        return DetailFragment.newInstance((ArrayList<String>) mCharacter.species);
                     case 3:
-                        return DetailFragment.newInstance((ArrayList<Item>) mCharacter.events.items);
+                        return DetailFragment.newInstance((ArrayList<String>) mCharacter.starships);
                     default:
-                        return DetailFragment.newInstance(new ArrayList<Item>());
+                        return DetailFragment.newInstance(new ArrayList<String>());
                 }
             }
 

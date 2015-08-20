@@ -27,20 +27,12 @@ public class TestComponentRule implements TestRule {
 
     private TestComponent mTestComponent;
 
-    public TestComponent getTestComponent() {
-        return mTestComponent;
-    }
-
     public TestDataManager getDataManager() {
         return (TestDataManager) mTestComponent.dataManager();
     }
 
     public AndroidBoilerplateService getMockWatchTowerService() {
         return getDataManager().getAndroidBoilerplateService();
-    }
-
-    public PreferencesHelper getPreferencesHelper() {
-        return getDataManager().getPreferencesHelper();
     }
 
     private void setupDaggerTestComponentInApplication() {

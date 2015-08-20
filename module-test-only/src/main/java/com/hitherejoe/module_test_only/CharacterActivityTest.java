@@ -43,9 +43,7 @@ public class CharacterActivityTest {
 
     @Test
     public void testCharacterTextIsDisplayed() {
-        int[] characterIds =
-                InstrumentationRegistry.getTargetContext().getResources().getIntArray(R.array.avengers);
-        Character mockCharacter = MockModelsUtil.createMockCharacter(characterIds[0]);
+        Character mockCharacter = MockModelsUtil.createMockCharacter();
         Intent i = CharacterActivity.getStartIntent(mContext, mockCharacter);
         main.launchActivity(i);
 

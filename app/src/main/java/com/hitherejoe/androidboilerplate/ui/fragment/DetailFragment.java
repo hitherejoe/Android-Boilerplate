@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hitherejoe.androidboilerplate.R;
-import com.hitherejoe.androidboilerplate.data.model.Item;
 import com.hitherejoe.androidboilerplate.ui.adapter.DetailHolder;
 
 import java.util.ArrayList;
@@ -29,12 +28,12 @@ public class DetailFragment extends Fragment {
     TextView mNoDataText;
 
     private static final String ARG_ITEMS = "ARG_ITEMS";
-    private List<Item> mItems;
+    private List<String> mItems;
 
-    public static DetailFragment newInstance(ArrayList<Item> items) {
+    public static DetailFragment newInstance(ArrayList<String> items) {
         DetailFragment propertiesFragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_ITEMS, items);
+        args.putStringArrayList(ARG_ITEMS, items);
         propertiesFragment.setArguments(args);
         return propertiesFragment;
     }
@@ -42,7 +41,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mItems = getArguments().getParcelableArrayList(ARG_ITEMS);
+        mItems = getArguments().getStringArrayList(ARG_ITEMS);
         if (mItems == null) {
             throw new IllegalArgumentException("DetailFragment requires a list of Item objects!");
         }
