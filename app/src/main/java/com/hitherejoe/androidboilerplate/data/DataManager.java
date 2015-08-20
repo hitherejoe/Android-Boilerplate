@@ -68,12 +68,12 @@ public class DataManager {
     }
 
     public Observable<Character> getAvengers(List<Integer> avengerIds) {
-        return Observable.from(avengerIds).flatMap(new Func1<Integer, Observable<AndroidBoilerplateService.CharacterResponse>>() {
+        return Observable.from(avengerIds).concatMap(new Func1<Integer, Observable<AndroidBoilerplateService.CharacterResponse>>() {
             @Override
             public Observable<AndroidBoilerplateService.CharacterResponse> call(Integer integer) {
                 return mAndroidBoilerplateService.getCharacter(integer);
             }
-        }).flatMap(new Func1<AndroidBoilerplateService.CharacterResponse, Observable<Character>>() {
+        }).concatMap(new Func1<AndroidBoilerplateService.CharacterResponse, Observable<Character>>() {
             @Override
             public Observable<Character> call(AndroidBoilerplateService.CharacterResponse characterResponse) {
                 if (characterResponse.data.results != null && !characterResponse.data.results.isEmpty()) {

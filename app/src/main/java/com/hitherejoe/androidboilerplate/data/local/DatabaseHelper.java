@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
+import com.hitherejoe.androidboilerplate.data.model.Character;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -25,10 +25,10 @@ public class DatabaseHelper {
         return mDatabaseOpenHelper.getWritableDatabase();
     }
 
-    public Observable<Boilerplate> saveBoilerplate(final Boilerplate story) {
-        return Observable.create(new Observable.OnSubscribe<Boilerplate>() {
+    public Observable<Character> saveBoilerplate(final Character story) {
+        return Observable.create(new Observable.OnSubscribe<Character>() {
             @Override
-            public void call(Subscriber<? super Boilerplate> subscriber) {
+            public void call(Subscriber<? super Character> subscriber) {
                 SQLiteDatabase db = getWritableDatabase();
                 db.insertOrThrow(Db.BoilerplateTable.TABLE_NAME, null, Db.BoilerplateTable.toContentValues(story));
                 subscriber.onNext(story);

@@ -2,7 +2,6 @@ package com.hitherejoe.androidboilerplate;
 
 
 import com.hitherejoe.androidboilerplate.data.DataManager;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
 import com.hitherejoe.androidboilerplate.util.DefaultConfig;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;

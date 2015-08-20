@@ -4,7 +4,6 @@ import android.database.Cursor;
 
 import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
 import com.hitherejoe.androidboilerplate.data.local.Db;
-import com.hitherejoe.androidboilerplate.data.model.Boilerplate;
 import com.hitherejoe.androidboilerplate.util.DefaultConfig;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
 

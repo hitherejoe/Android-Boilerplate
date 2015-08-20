@@ -74,4 +74,6 @@ dependencies {
         exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+
+    androidTestApt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 }
