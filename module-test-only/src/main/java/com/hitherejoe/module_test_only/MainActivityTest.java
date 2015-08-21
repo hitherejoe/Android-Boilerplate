@@ -14,8 +14,6 @@ import com.hitherejoe.module_test_only.injection.TestComponentRule;
 import com.hitherejoe.module_test_only.util.ClearDataRule;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
