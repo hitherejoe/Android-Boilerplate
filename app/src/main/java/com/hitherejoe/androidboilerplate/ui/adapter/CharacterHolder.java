@@ -53,26 +53,11 @@ public class CharacterHolder extends ItemViewHolder<Character> {
 
     @Override
     public void onSetListeners() {
-        mViewText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContext().startActivity(CharacterActivity.getStartIntent(getContext(), getItem()));
-            }
-        });
+        mViewText.setOnClickListener(v -> getContext().startActivity(CharacterActivity.getStartIntent(getContext(), getItem())));
 
-        mCharacterContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContext().startActivity(CharacterActivity.getStartIntent(getContext(), getItem()));
-            }
-        });
+        mCharacterContainer.setOnClickListener(v -> getContext().startActivity(CharacterActivity.getStartIntent(getContext(), getItem())));
 
-        mTabText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContext().startActivity(DetailActivity.getStartIntent(getContext(), getItem()));
-            }
-        });
+        mTabText.setOnClickListener(v -> getContext().startActivity(DetailActivity.getStartIntent(getContext(), getItem())));
     }
 
     private String getImageUrl(String name) {
