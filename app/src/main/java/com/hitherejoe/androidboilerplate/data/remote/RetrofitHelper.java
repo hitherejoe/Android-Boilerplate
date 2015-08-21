@@ -13,11 +13,8 @@ public class RetrofitHelper {
                 .setEndpoint(AndroidBoilerplateService.ENDPOINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter(new GsonBuilder().create()))
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestInterceptor.RequestFacade request) {
-                        // If required...
-                    }
+                .setRequestInterceptor(request -> {
+                    // If required...
                 })
                 .build();
         return restAdapter.create(AndroidBoilerplateService.class);

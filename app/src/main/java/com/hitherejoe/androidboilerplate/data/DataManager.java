@@ -69,37 +69,17 @@ public class DataManager {
     }
 
     public Observable<Character> syncCharacters(int[] ids) {
-        return getCharacters(ids).toList().concatMap(new Func1<List<Character>, Observable<? extends Character>>() {
-            @Override
-            public Observable<? extends Character> call(List<Character> characters) {
-                return mDatabaseHelper.setCharacters(characters);
-            }
-        });
+        return getCharacters(ids).toList().concatMap(characters -> mDatabaseHelper.setCharacters(characters));
     }
 
     public Observable<Character> getCharacters(int[] ids) {
         List<Integer> characterIds = new ArrayList<>(ids.length);
         for (int id : ids) characterIds.add(id);
-        return Observable.from(characterIds).concatMap(new Func1<Integer, Observable<Character>>() {
-            @Override
-            public Observable<Character> call(Integer integer) {
-                return mAndroidBoilerplateService.getCharacter(integer);
-            }
-        });
+        return Observable.from(characterIds).concatMap(integer -> mAndroidBoilerplateService.getCharacter(integer));
     }
 
     public Observable<Character> loadCharacters() {
-        return mDatabaseHelper.getCharacters().concatMap(new Func1<List<Character>, Observable<? extends Character>>() {
-            @Override
-            public Observable<? extends Character> call(List<Character> characters) {
-                return Observable.from(characters);
-            }
-        }).concatMap(new Func1<Character, Observable<? extends Character>>() {
-            @Override
-            public Observable<? extends Character> call(Character character) {
-                return Observable.just(character);
-            }
-        }).distinct();
+        return mDatabaseHelper.getCharacters().concatMap(characters -> Observable.from(characters)).concatMap(character -> Observable.just(character)).distinct();
     }
 
 }

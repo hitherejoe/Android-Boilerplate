@@ -29,11 +29,6 @@ public class DetailHolder extends ItemViewHolder<String> {
 
     @Override
     public void onSetListeners() {
-        mDetailText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getItem())));
-            }
-        });
+        mDetailText.setOnClickListener(v -> getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getItem()))));
     }
 }

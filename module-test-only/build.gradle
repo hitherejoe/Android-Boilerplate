@@ -1,30 +1,39 @@
 apply plugin: 'com.android.test'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc3"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
 
     defaultConfig {
-        testApplicationId 'com.hitherejoe.androidboilerplate.test'
         // The Instrumentation test runner used to run tests.
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         minSdkVersion 16
         targetSdkVersion 22
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     targetProjectPath ':app'
 }
 
 dependencies {
-    final SUPPORT_LIBRARY_VERSION = '22.2.1'
+    final SUPPORT_LIBRARY_VERSION = '23.0.0'
     final DAGGER_VERSION = '2.0.1'
     final DEXMAKER_VERSION = '1.2'
     final MOCKITO_VERSION = '1.10.19'
     final ESPRESSO_VERSION = '2.2'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
 
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     apt      "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
@@ -45,4 +54,9 @@ dependencies {
     }
 
     apt 'com.google.dagger:dagger-compiler:2.0.1'
+}
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
+    jvmArgs '-noverify'
 }
