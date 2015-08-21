@@ -43,7 +43,7 @@
     <string name="dialog_general_error_Message">There was an error making the request</string>
     <string name="dialog_error_no_connection">Sorry, you need a connection to do that!</string>
 
-
+    <!-- Arrays -->
 
     <integer-array name="characters">
         <item>1</item>

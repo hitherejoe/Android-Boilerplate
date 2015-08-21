@@ -32,9 +32,9 @@ public class MockModelsUtil {
         return items;
     }
 
-    public static List<Character> createListOfMockCharacters(int[] ids) {
+    public static List<Character> createListOfMockCharacters(int count) {
         List<Character> characters = new ArrayList<>();
-        for (int id : ids) {
+        for (int i = 0; i < count; i++) {
             characters.add(createMockCharacter());
         }
         return characters;

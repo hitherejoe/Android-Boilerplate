@@ -11,7 +11,11 @@ import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.ui.activity.MainActivity;
 import com.hitherejoe.androidboilerplate.util.MockModelsUtil;
 import com.hitherejoe.module_test_only.injection.TestComponentRule;
+import com.hitherejoe.module_test_only.util.ClearDataRule;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,14 +45,27 @@ public class MainActivityTest {
     @Rule
     public final TestComponentRule component = new TestComponentRule();
 
+    @Rule
+    public final ClearDataRule clearDataRule = new ClearDataRule(component);
+
+    @Before
+    public void setUp() {
+        clearDataRule.clearData();
+    }
+
     @Test
     public void testCharactersShowAndAreScrollableInFeed() {
         int[] characterIds =
                 InstrumentationRegistry.getTargetContext().getResources().getIntArray(com.hitherejoe.androidboilerplate.R.array.characters);
-        List<Character> mockCharacters = MockModelsUtil.createListOfMockCharacters(characterIds);
-        stubMockPosts(characterIds, mockCharacters);
+        List<Character> mockCharacters = MockModelsUtil.createListOfMockCharacters(characterIds.length);
+        stubMockCharacters(characterIds, mockCharacters);
         main.launchActivity(null);
-        checkPostsDisplayOnRecyclerView(mockCharacters);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        checkCharactersDisplayOnRecyclerView(mockCharacters);
     }
 
     @Test
@@ -59,17 +76,17 @@ public class MainActivityTest {
         Character mockCharacter = MockModelsUtil.createMockCharacter();
         List<Character> mockCharacters = new ArrayList<>();
         mockCharacters.add(mockCharacter);
-        stubMockPosts(characterIds, mockCharacters);
+        stubMockCharacters(characterIds, mockCharacters);
         main.launchActivity(null);
-        checkPostsDisplayOnRecyclerView(mockCharacters);
+        checkCharactersDisplayOnRecyclerView(mockCharacters);
     }
 
     @Test
     public void testClickOnCardOpensCharacterActivity() {
         int[] characterIds =
                 InstrumentationRegistry.getTargetContext().getResources().getIntArray(com.hitherejoe.androidboilerplate.R.array.characters);
-        List<Character> mockCharacters = MockModelsUtil.createListOfMockCharacters(characterIds);
-        stubMockPosts(characterIds, mockCharacters);
+        List<Character> mockCharacters = MockModelsUtil.createListOfMockCharacters(characterIds.length);
+        stubMockCharacters(characterIds, mockCharacters);
         main.launchActivity(null);
         onView(withText(mockCharacters.get(0).name))
                 .perform(click());
@@ -85,7 +102,7 @@ public class MainActivityTest {
         Character mockCharacter = MockModelsUtil.createMockCharacter();
         List<Character> mockCharacters = new ArrayList<>();
         mockCharacters.add(mockCharacter);
-        stubMockPosts(characterIds, mockCharacters);
+        stubMockCharacters(characterIds, mockCharacters);
         main.launchActivity(null);
         onView(withText("View"))
                 .perform(click());
@@ -101,36 +118,31 @@ public class MainActivityTest {
         Character mockCharacter = MockModelsUtil.createMockCharacter();
         List<Character> mockCharacters = new ArrayList<>();
         mockCharacters.add(mockCharacter);
-        stubMockPosts(characterIds, mockCharacters);
+        stubMockCharacters(characterIds, mockCharacters);
         main.launchActivity(null);
         onView(withText("Collections"))
                 .perform(click());
-        onView(withText("Comics"))
+        onView(withText("Films"))
                 .check(matches(isDisplayed()));
     }
 
-    private void checkPostsDisplayOnRecyclerView(List<Character> postsToCheck) {
-        for (int i = 0; i < postsToCheck.size(); i++) {
+    private void checkCharactersDisplayOnRecyclerView(List<Character> charactersToCheck) {
+        for (int i = 0; i < charactersToCheck.size(); i++) {
             onView(withId(com.hitherejoe.androidboilerplate.R.id.recycler_characters))
                     .perform(RecyclerViewActions.scrollToPosition(i));
-            checkPostDisplays(postsToCheck.get(i));
+            checkCharacterDisplays(charactersToCheck.get(i));
         }
     }
 
-    private void checkPostDisplays(Character character) {
-        String films =
-                InstrumentationRegistry.getTargetContext().getResources().getString(com.hitherejoe.androidboilerplate.R.string.text_films_description, character.films.size());
-        String noDescription = InstrumentationRegistry.getTargetContext().getResources().getString(com.hitherejoe.androidboilerplate.R.string.text_no_description);
+    private void checkCharacterDisplays(Character character) {
         onView(withText(character.name))
-                .check(matches(isDisplayed()));
-        onView(withText(character.films.size() == 0 ? noDescription : films))
                 .check(matches(isDisplayed()));
     }
 
-    private void stubMockPosts(int[] ids, List<Character> mockPosts) {
-        for (int i = 0; i < mockPosts.size(); i++) {
+    private void stubMockCharacters(int[] ids, List<Character> mockCharacters) {
+        for (int i = 0; i < mockCharacters.size(); i++) {
             when(component.getMockWatchTowerService().getCharacter(ids[i]))
-                    .thenReturn(Observable.just(MockModelsUtil.createMockCharacter()));
+                    .thenReturn(Observable.just(mockCharacters.get(i)));
         }
     }
 }

@@ -26,9 +26,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
 
-    compile 'io.reactivex:rxandroid:0.25.0'
-    compile 'com.jakewharton.timber:timber:3.1.0'
-
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     apt      "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28'

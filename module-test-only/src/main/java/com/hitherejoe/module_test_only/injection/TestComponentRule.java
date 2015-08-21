@@ -4,6 +4,7 @@ package com.hitherejoe.module_test_only.injection;
 import android.support.test.InstrumentationRegistry;
 
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
+import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
 import com.hitherejoe.androidboilerplate.data.local.PreferencesHelper;
 import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
 import com.hitherejoe.module_test_only.injection.component.DaggerTestComponent;
@@ -29,6 +30,10 @@ public class TestComponentRule implements TestRule {
 
     public TestDataManager getDataManager() {
         return (TestDataManager) mTestComponent.dataManager();
+    }
+
+    public DatabaseHelper getDatabaseHelper() {
+        return getDataManager().getDatabaseHelper();
     }
 
     public AndroidBoilerplateService getMockWatchTowerService() {

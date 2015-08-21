@@ -31,13 +31,12 @@ public class DatabaseHelperTest {
     @Before
     public void setUp() {
         mDatabaseHelper = new DatabaseHelper(RuntimeEnvironment.application);
-        mDatabaseHelper.clearTables();
+        mDatabaseHelper.clearTables().subscribe();
     }
 
     @Test
     public void shouldSetCharacters() throws Exception {
-        int[] ids = new int[]{ 10034 };
-        List<Character> characters = MockModelsUtil.createListOfMockCharacters(ids);
+        List<Character> characters = MockModelsUtil.createListOfMockCharacters(5);
 
         TestSubscriber<Character> result = new TestSubscriber<>();
         mDatabaseHelper.setCharacters(characters).subscribe(result);
@@ -46,7 +45,7 @@ public class DatabaseHelperTest {
 
         Cursor cursor = mDatabaseHelper.getBriteDb()
                 .query("SELECT * FROM " + Db.CharacterTable.TABLE_NAME);
-        assertEquals(1, cursor.getCount());
+        assertEquals(5, cursor.getCount());
         for (Character character : characters) {
             cursor.moveToNext();
             assertEquals(character, Db.CharacterTable.parseCursor(cursor));
@@ -55,8 +54,7 @@ public class DatabaseHelperTest {
 
     @Test
     public void shouldGetCharacters() throws Exception {
-        int[] ids = new int[]{ 10034 };
-        List<Character> characters = MockModelsUtil.createListOfMockCharacters(ids);
+        List<Character> characters = MockModelsUtil.createListOfMockCharacters(5);
 
         mDatabaseHelper.setCharacters(characters).subscribe();
 

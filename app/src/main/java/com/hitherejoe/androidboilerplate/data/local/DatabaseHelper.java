@@ -74,6 +74,22 @@ public class DatabaseHelper {
                 });
     }
 
+    public Observable<Void> deleteCharacters() {
+        return Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                mBriteDb.beginTransaction();
+                try {
+                    mBriteDb.delete(Db.CharacterTable.TABLE_NAME, null);
+                    mBriteDb.setTransactionSuccessful();
+                    subscriber.onCompleted();
+                } finally {
+                    mBriteDb.endTransaction();
+                }
+            }
+        });
+    }
+
     public Observable<Void> clearTables() {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override

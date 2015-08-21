@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.data.DataManager;
+import com.hitherejoe.androidboilerplate.data.local.DatabaseHelper;
 import com.hitherejoe.androidboilerplate.data.remote.AndroidBoilerplateService;
 import com.hitherejoe.module_test_only.injection.component.DaggerDataManagerTestComponent;
 import com.hitherejoe.module_test_only.injection.component.TestComponent;
@@ -35,6 +36,10 @@ public class TestDataManager extends DataManager {
 
     public AndroidBoilerplateService getAndroidBoilerplateService() {
         return mAndroidBoilerplateService;
+    }
+
+    public DatabaseHelper getDatabaseHelper() {
+        return mDatabaseHelper;
     }
 
 }

@@ -37,7 +37,9 @@ dependencies {
     final DAGGER_VERSION = '2.0.1'
     final HAMCREST_VERSION = '1.3'
     final MOCKITO_VERSION = '1.10.19'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     compile 'com.android.support:support-v4:22.2.1'
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
@@ -55,9 +57,11 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'uk.co.ribot:easyadapter:1.5.0@aar'
+
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28'
+
     testCompile 'junit:junit:4.12'
     testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
@@ -67,6 +71,6 @@ dependencies {
         exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+
     androidTestApt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
-    compile 'com.google.dexmaker:dexmaker:1.2'
 }
