@@ -5,6 +5,8 @@ Android Boilerplate
     <img src="images/ic_web.png" alt="Web Launcher"/>
 </p>
 
+[![Build Status](https://travis-ci.org/hitherejoe/Android-Boilerplate.svg?branch=travis_config)](https://travis-ci.org/hitherejoe/Android-Boilerplate)
+
 A simple boilerplate application which demonstrates the downloading, persisting and syncing of data - displayed with a common layout used amongst applications. It features the use of the Design Support library, data caching and the new Test Modules, separating the functional tests from production code.
 
 The project is setup using:
