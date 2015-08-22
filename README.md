@@ -1,11 +1,10 @@
-Android Boilerplate
+Android Boilerplate [![Build Status](https://travis-ci.org/hitherejoe/Android-Boilerplate.svg?branch=travis_config)](https://travis-ci.org/hitherejoe/Android-Boilerplate)
 ===================
 
 <p align="center">
     <img src="images/ic_web.png" alt="Web Launcher"/>
 </p>
 
-[![Build Status](https://travis-ci.org/hitherejoe/Android-Boilerplate.svg?branch=travis_config)](https://travis-ci.org/hitherejoe/Android-Boilerplate)
 
 A simple boilerplate application which demonstrates the downloading, persisting and syncing of data - displayed with a common layout used amongst applications. It features the use of the Design Support library, data caching and the new Test Modules, separating the functional tests from production code.
 
@@ -57,3 +56,11 @@ To run **unit** tests on your machine using [Robolectric] (http://robolectric.or
 To run **automated** tests on connected devices:
 
     ./gradlew connectedAndroidTest
+
+Thanks
+--------
+
+Thanks to the following for contributions!
+
+[ivacf] (https://github.com/ivacf)
+[Jawnnypoo] (https://github.com/Jawnnypoo)
