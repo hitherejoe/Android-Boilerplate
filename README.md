@@ -1,4 +1,4 @@
-Android Boilerplate [![Build Status](https://travis-ci.org/hitherejoe/Android-Boilerplate.svg?branch=travis_config)](https://travis-ci.org/hitherejoe/Android-Boilerplate)
+Android Boilerplate [![Build Status](https://travis-ci.org/hitherejoe/Android-Boilerplate.svg?branch=master)](https://travis-ci.org/hitherejoe/Android-Boilerplate)
 ===================
 
 <p align="center">
