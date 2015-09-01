@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.model.Character;
 
+import org.parceler.Parcels;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -27,7 +29,7 @@ public class CharacterActivity extends BaseActivity {
 
     public static Intent getStartIntent(Context context, Character character) {
         Intent intent = new Intent(context, CharacterActivity.class);
-        intent.putExtra(EXTRA_CHARACTER, character);
+        intent.putExtra(EXTRA_CHARACTER, Parcels.wrap(character));
         return intent;
     }
 
@@ -36,7 +38,7 @@ public class CharacterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character);
         ButterKnife.bind(this);
-        mCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
+        mCharacter = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_CHARACTER));
         if (mCharacter == null) {
             throw new IllegalArgumentException("CharacterActivity requires a Character object!");
         }
