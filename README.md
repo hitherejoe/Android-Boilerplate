@@ -64,3 +64,10 @@ Thanks to the following for contributions!
 
 [ivacf] (https://github.com/ivacf)  
 [Jawnnypoo] (https://github.com/Jawnnypoo)
+
+Attributions
+------------
+
+Thanks to the following for use of icons off of Noun Project:
+
+[Iconoci](https://thenounproject.com/iconoci)
