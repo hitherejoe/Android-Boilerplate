@@ -8,9 +8,9 @@ import rx.Observable;
 
 public interface AndroidBoilerplateService {
 
-    String ENDPOINT = "http://swapi.co/api";
+    String ENDPOINT = "http://swapi.co/api/";
 
-    @GET("/people/{personId}")
+    @GET("people/{personId}")
     Observable<Character> getCharacter(@Path("personId") int id);
 
 }

@@ -5,10 +5,6 @@ import android.net.ConnectivityManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hitherejoe.androidboilerplate.data.model.ErrorResponse;
-
-import retrofit.RetrofitError;
-import retrofit.mime.TypedByteArray;
 
 public class DataUtils {
 
