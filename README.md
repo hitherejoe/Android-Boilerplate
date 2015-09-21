@@ -1,4 +1,4 @@
-Android Boilerplate [![Build Status](https://travis-ci.org/hitherejoe/Android-Boilerplate.svg?branch=travis_config)](https://travis-ci.org/hitherejoe/Android-Boilerplate)
+Android Boilerplate [![Build Status](https://travis-ci.org/hitherejoe/Android-Boilerplate.svg?branch=master)](https://travis-ci.org/hitherejoe/Android-Boilerplate)
 ===================
 
 <p align="center">
@@ -62,5 +62,12 @@ Thanks
 
 Thanks to the following for contributions!
 
-[ivacf] (https://github.com/ivacf)
+[ivacf] (https://github.com/ivacf)  
 [Jawnnypoo] (https://github.com/Jawnnypoo)
+
+Attributions
+------------
+
+Thanks to the following for use of icons off of Noun Project:
+
+[Iconoci](https://thenounproject.com/iconoci)
