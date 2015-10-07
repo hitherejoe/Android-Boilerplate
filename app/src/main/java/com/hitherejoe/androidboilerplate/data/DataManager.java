@@ -64,10 +64,6 @@ public class DataManager {
         return mSubscribeScheduler;
     }
 
-    public Scheduler getScheduler() {
-        return mSubscribeScheduler;
-    }
-
     public Observable<Character> syncCharacters(int[] ids) {
         return getCharacters(ids).toList().concatMap(new Func1<List<Character>, Observable<? extends Character>>() {
             @Override
