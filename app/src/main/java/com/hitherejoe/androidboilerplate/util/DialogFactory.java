@@ -7,9 +7,6 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 
 import com.hitherejoe.androidboilerplate.R;
-import com.hitherejoe.androidboilerplate.data.model.ErrorResponse;
-
-import retrofit.RetrofitError;
 
 public class DialogFactory {
 

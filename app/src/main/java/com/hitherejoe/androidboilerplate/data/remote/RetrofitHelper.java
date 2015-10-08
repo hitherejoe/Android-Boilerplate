@@ -1,26 +1,18 @@
 package com.hitherejoe.androidboilerplate.data.remote;
 
-import com.google.gson.GsonBuilder;
-
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 
 public class RetrofitHelper {
 
     public AndroidBoilerplateService newAndroidBoilerplateService() {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(AndroidBoilerplateService.ENDPOINT)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setConverter(new GsonConverter(new GsonBuilder().create()))
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestInterceptor.RequestFacade request) {
-                        // If required...
-                    }
-                })
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(AndroidBoilerplateService.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-        return restAdapter.create(AndroidBoilerplateService.class);
+        return retrofit.create(AndroidBoilerplateService.class);
     }
 
 }
