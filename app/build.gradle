@@ -41,6 +41,7 @@ dependencies {
     final DAGGER_VERSION = '2.0.1'
     final HAMCREST_VERSION = '1.3'
     final MOCKITO_VERSION = '1.10.19'
+    final PARCELER_VERSION = '1.0.3'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -63,6 +64,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'uk.co.ribot:easyadapter:1.5.0@aar'
+
+    compile "org.parceler:parceler-api:$PARCELER_VERSION"
+    apt "org.parceler:parceler:$PARCELER_VERSION"
 
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
