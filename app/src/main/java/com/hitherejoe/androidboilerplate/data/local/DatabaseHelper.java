@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.hitherejoe.androidboilerplate.data.model.Character;
+
 import com.squareup.sqlbrite.BriteDatabase;
+import com.squareup.sqlbrite.BriteDatabase.Transaction;
 import com.squareup.sqlbrite.SqlBrite;
 
 import java.util.ArrayList;
@@ -41,17 +43,17 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<Character>() {
             @Override
             public void call(Subscriber<? super Character> subscriber) {
-                mBriteDb.beginTransaction();
+                Transaction transaction = mBriteDb.newTransaction();
                 try {
                     mBriteDb.delete(Db.CharacterTable.TABLE_NAME, null);
                     for (Character character : characters) {
                         mBriteDb.insert(Db.CharacterTable.TABLE_NAME, Db.CharacterTable.toContentValues(character));
                         subscriber.onNext(character);
                     }
-                    mBriteDb.setTransactionSuccessful();
+                    transaction.markSuccessful();
                     subscriber.onCompleted();
                 } finally {
-                    mBriteDb.endTransaction();
+                    transaction.end();
                 }
             }
         });
@@ -78,13 +80,13 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
-                mBriteDb.beginTransaction();
+                Transaction transaction = mBriteDb.newTransaction();
                 try {
                     mBriteDb.delete(Db.CharacterTable.TABLE_NAME, null);
-                    mBriteDb.setTransactionSuccessful();
+                    transaction.markSuccessful();
                     subscriber.onCompleted();
                 } finally {
-                    mBriteDb.endTransaction();
+                    transaction.end();
                 }
             }
         });
@@ -94,17 +96,17 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
-                mBriteDb.beginTransaction();
+                Transaction transaction = mBriteDb.newTransaction();
                 try {
                     Cursor cursor = mBriteDb.query("SELECT name FROM sqlite_master WHERE type='table'");
                     while (cursor.moveToNext()) {
                         mBriteDb.delete(cursor.getString(cursor.getColumnIndex("name")), null);
                     }
                     cursor.close();
-                    mBriteDb.setTransactionSuccessful();
+                    transaction.markSuccessful();
                     subscriber.onCompleted();
                 } finally {
-                    mBriteDb.endTransaction();
+                    transaction.end();
                 }
             }
         });
