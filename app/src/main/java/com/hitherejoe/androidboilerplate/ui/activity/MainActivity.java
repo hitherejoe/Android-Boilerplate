@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity {
             int[] characterIds = getResources().getIntArray(R.array.characters);
             mSubscriptions.add(mDataManager.syncCharacters(characterIds)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(mDataManager.getScheduler())
+                    .subscribeOn(mDataManager.getSubscribeScheduler())
                     .subscribe(new Subscriber<Character>() {
                         @Override
                         public void onCompleted() { }
@@ -142,7 +142,7 @@ public class MainActivity extends BaseActivity {
     private void loadCharacters() {
         mSubscriptions.add(mDataManager.loadCharacters()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(mDataManager.getScheduler())
+                .subscribeOn(mDataManager.getSubscribeScheduler())
                 .subscribe(new Subscriber<Character>() {
                     @Override
                     public void onCompleted() {
