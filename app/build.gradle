@@ -40,7 +40,7 @@ dependencies {
     final SUPPORT_LIBRARY_VERSION = '23.1.0'
     final DAGGER_VERSION = '2.0.1'
     final HAMCREST_VERSION = '1.3'
-    final MOCKITO_VERSION = '2.0.31-beta'
+    final MOCKITO_VERSION = '1.10.19'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
