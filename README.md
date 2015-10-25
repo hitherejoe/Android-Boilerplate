@@ -21,6 +21,7 @@ The project is setup using:
 - [Timber] (https://github.com/JakeWharton/timber)
 - [Mockito](http://mockito.org/)
 - [Glide](https://github.com/bumptech/glide)
+- [Parceler](https://github.com/johncarl81/parceler)
 
 <p align="center">
     <img src="images/device.png" alt="Web Launcher"/>

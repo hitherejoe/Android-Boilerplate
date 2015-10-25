@@ -14,6 +14,8 @@ import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.model.Character;
 import com.hitherejoe.androidboilerplate.ui.fragment.DetailFragment;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -36,7 +38,7 @@ public class DetailActivity extends BaseActivity {
 
     public static Intent getStartIntent(Context context, Character character) {
         Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(EXTRA_CHARACTER, character);
+        intent.putExtra(EXTRA_CHARACTER, Parcels.wrap(character));
         return intent;
     }
 
@@ -45,7 +47,7 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-        mCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
+        mCharacter = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_CHARACTER));
         if (mCharacter == null) {
             throw new IllegalArgumentException("DetailActivity requires a Character object!");
         }

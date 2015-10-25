@@ -1,13 +1,13 @@
 package com.hitherejoe.androidboilerplate.data.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
 
 import java.util.List;
 
-public class Character implements Parcelable {
+@Parcel
+public class Character {
 
     public String name;
     public String height;
@@ -27,56 +27,8 @@ public class Character implements Parcelable {
     public List<String> vehicles;
     public List<String> starships;
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.height);
-        dest.writeString(this.mass);
-        dest.writeString(this.hairColor);
-        dest.writeString(this.skinColor);
-        dest.writeString(this.eyeColor);
-        dest.writeString(this.birthYear);
-        dest.writeString(this.gender);
-        dest.writeString(this.homeworld);
-        dest.writeStringList(this.films);
-        dest.writeStringList(this.species);
-        dest.writeStringList(this.vehicles);
-        dest.writeStringList(this.starships);
-    }
-
     public Character() {
     }
-
-    protected Character(Parcel in) {
-        this.name = in.readString();
-        this.height = in.readString();
-        this.mass = in.readString();
-        this.hairColor = in.readString();
-        this.skinColor = in.readString();
-        this.eyeColor = in.readString();
-        this.birthYear = in.readString();
-        this.gender = in.readString();
-        this.homeworld = in.readString();
-        this.films = in.createStringArrayList();
-        this.species = in.createStringArrayList();
-        this.vehicles = in.createStringArrayList();
-        this.starships = in.createStringArrayList();
-    }
-
-    public static final Parcelable.Creator<Character> CREATOR = new Parcelable.Creator<Character>() {
-        public Character createFromParcel(Parcel source) {
-            return new Character(source);
-        }
-
-        public Character[] newArray(int size) {
-            return new Character[size];
-        }
-    };
 
     @Override
     public boolean equals(Object o) {
