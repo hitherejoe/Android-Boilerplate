@@ -22,16 +22,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.hitherejoe.androidboilerplate.data.SyncService"/>
-
-        <receiver
-            android:name="com.hitherejoe.androidboilerplate.data.SyncService$SyncOnConnectionAvailable"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".ui.activity.DetailActivity"
             android:screenOrientation="portrait"

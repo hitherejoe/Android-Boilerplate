@@ -5,9 +5,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
+import com.hitherejoe.androidboilerplate.injection.component.ActivityComponent;
 import com.hitherejoe.androidboilerplate.injection.component.ApplicationComponent;
+import com.hitherejoe.androidboilerplate.injection.component.DaggerActivityComponent;
+import com.hitherejoe.androidboilerplate.injection.module.ActivityModule;
 
 public class BaseActivity extends AppCompatActivity {
+
+    private ActivityComponent mActivityComponent;
+
+    public ActivityComponent activityComponent() {
+        if (mActivityComponent == null) {
+            mActivityComponent = DaggerActivityComponent.builder()
+                    .activityModule(new ActivityModule(this))
+                    .applicationComponent(AndroidBoilerplateApplication.get(this).getComponent())
+                    .build();
+        }
+        return mActivityComponent;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

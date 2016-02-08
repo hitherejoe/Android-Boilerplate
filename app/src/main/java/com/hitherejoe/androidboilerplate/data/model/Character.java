@@ -68,15 +68,16 @@ public class Character implements Parcelable {
         this.starships = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<Character> CREATOR = new Parcelable.Creator<Character>() {
-        public Character createFromParcel(Parcel source) {
-            return new Character(source);
-        }
+    public static final Parcelable.Creator<Character> CREATOR =
+            new Parcelable.Creator<Character>() {
+                public Character createFromParcel(Parcel source) {
+                    return new Character(source);
+                }
 
-        public Character[] newArray(int size) {
-            return new Character[size];
-        }
-    };
+                public Character[] newArray(int size) {
+                    return new Character[size];
+                }
+            };
 
     @Override
     public boolean equals(Object o) {
@@ -89,24 +90,30 @@ public class Character implements Parcelable {
         if (height != null ? !height.equals(character.height) : character.height != null)
             return false;
         if (mass != null ? !mass.equals(character.mass) : character.mass != null) return false;
-        if (hairColor != null ? !hairColor.equals(character.hairColor) : character.hairColor != null)
+        if (hairColor != null
+                ? !hairColor.equals(character.hairColor) : character.hairColor != null)
             return false;
-        if (skinColor != null ? !skinColor.equals(character.skinColor) : character.skinColor != null)
+        if (skinColor != null
+                ? !skinColor.equals(character.skinColor) : character.skinColor != null)
             return false;
-        if (eyeColor != null ? !eyeColor.equals(character.eyeColor) : character.eyeColor != null)
+        if (eyeColor != null
+                ? !eyeColor.equals(character.eyeColor) : character.eyeColor != null)
             return false;
-        if (birthYear != null ? !birthYear.equals(character.birthYear) : character.birthYear != null)
+        if (birthYear != null
+                ? !birthYear.equals(character.birthYear) : character.birthYear != null)
             return false;
         if (gender != null ? !gender.equals(character.gender) : character.gender != null)
             return false;
-        if (homeworld != null ? !homeworld.equals(character.homeworld) : character.homeworld != null)
+        if (homeworld != null
+                ? !homeworld.equals(character.homeworld) : character.homeworld != null)
             return false;
         if (films != null ? !films.equals(character.films) : character.films != null) return false;
         if (species != null ? !species.equals(character.species) : character.species != null)
             return false;
         if (vehicles != null ? !vehicles.equals(character.vehicles) : character.vehicles != null)
             return false;
-        return !(starships != null ? !starships.equals(character.starships) : character.starships != null);
+        return !(starships != null
+                ? !starships.equals(character.starships) : character.starships != null);
 
     }
 

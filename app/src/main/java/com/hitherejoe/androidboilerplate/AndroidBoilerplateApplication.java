@@ -16,11 +16,13 @@ public class AndroidBoilerplateApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
 
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+        mApplicationComponent.inject(this);
     }
 
     public static AndroidBoilerplateApplication get(Context context) {

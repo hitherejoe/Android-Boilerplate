@@ -10,22 +10,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hitherejoe.androidboilerplate.R;
-import com.hitherejoe.androidboilerplate.ui.adapter.DetailHolder;
+import com.hitherejoe.androidboilerplate.ui.adapter.DetailAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import uk.co.ribot.easyadapter.EasyRecyclerAdapter;
 
 public class DetailFragment extends Fragment {
 
-    @Bind(R.id.recycler_detail)
-    RecyclerView mDetailRecycler;
-
-    @Bind(R.id.text_no_data)
-    TextView mNoDataText;
+    @Bind(R.id.recycler_detail) RecyclerView mDetailRecycler;
+    @Bind(R.id.text_no_data) TextView mNoDataText;
 
     private static final String ARG_ITEMS = "ARG_ITEMS";
     private List<String> mItems;
@@ -48,18 +44,21 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, fragmentView);
         setupRecyclerView();
         return fragmentView;
     }
 
-
     private void setupRecyclerView() {
         mDetailRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (mItems != null && mItems.size() > 0) {
-            mDetailRecycler.setAdapter(new EasyRecyclerAdapter<>(getActivity(), DetailHolder.class, mItems));
+            DetailAdapter detailAdapter = new DetailAdapter();
+            detailAdapter.setDetails(mItems);
+            mDetailRecycler.setAdapter(detailAdapter);
         } else {
             mNoDataText.setVisibility(View.VISIBLE);
             mDetailRecycler.setVisibility(View.GONE);

@@ -10,52 +10,44 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.hitherejoe.androidboilerplate.AndroidBoilerplateApplication;
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.DataManager;
-import com.hitherejoe.androidboilerplate.data.SyncService;
 import com.hitherejoe.androidboilerplate.data.model.Character;
-import com.hitherejoe.androidboilerplate.ui.adapter.CharacterHolder;
+import com.hitherejoe.androidboilerplate.ui.adapter.CharacterAdapter;
 import com.hitherejoe.androidboilerplate.util.DataUtils;
 import com.hitherejoe.androidboilerplate.util.DialogFactory;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
-import uk.co.ribot.easyadapter.EasyRecyclerAdapter;
 
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.recycler_characters)
-    RecyclerView mCharactersRecycler;
+    @Bind(R.id.progress_indicator) ProgressBar mProgressBar;
+    @Bind(R.id.recycler_characters) RecyclerView mCharactersRecycler;
+    @Bind(R.id.swipe_container) SwipeRefreshLayout mSwipeRefresh;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @Bind(R.id.progress_indicator)
-    ProgressBar mProgressBar;
-
-    @Bind(R.id.swipe_container)
-    SwipeRefreshLayout mSwipeRefresh;
-
-    private DataManager mDataManager;
+    @Inject DataManager mDataManager;
+    @Inject CharacterAdapter mCharacterAdapter;
     private CompositeSubscription mSubscriptions;
-    private EasyRecyclerAdapter<Character> mEasyRecycleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applicationComponent().inject(this);
-        startService(SyncService.getStartIntent(this));
+        activityComponent().inject(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mSubscriptions = new CompositeSubscription();
-        mDataManager = AndroidBoilerplateApplication.get(this).getComponent().dataManager();
         setupToolbar();
         setupRecyclerView();
         loadCharacters();
@@ -89,28 +81,29 @@ public class MainActivity extends BaseActivity {
 
     private void setupRecyclerView() {
         mCharactersRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mEasyRecycleAdapter = new EasyRecyclerAdapter<>(this, CharacterHolder.class);
-        mCharactersRecycler.setAdapter(mEasyRecycleAdapter);
+        mCharactersRecycler.setAdapter(mCharacterAdapter);
 
         mSwipeRefresh.setColorSchemeResources(R.color.primary);
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mEasyRecycleAdapter.setItems(new ArrayList<Character>());
-                reSyncCharacters();
+                mCharacterAdapter.setCharacters(new ArrayList<Character>());
+                loadCharacters();
             }
         });
     }
 
-    private void reSyncCharacters() {
+    private void loadCharacters() {
         if (DataUtils.isNetworkAvailable(this)) {
             int[] characterIds = getResources().getIntArray(R.array.characters);
-            mSubscriptions.add(mDataManager.syncCharacters(characterIds)
+            mSubscriptions.add(mDataManager.getCharacters(characterIds)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(mDataManager.getSubscribeScheduler())
-                    .subscribe(new Subscriber<Character>() {
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<List<Character>>() {
                         @Override
-                        public void onCompleted() { }
+                        public void onCompleted() {
+
+                        }
 
                         @Override
                         public void onError(Throwable error) {
@@ -121,11 +114,10 @@ public class MainActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onNext(Character character) {
+                        public void onNext(List<Character> characters) {
                             mProgressBar.setVisibility(View.GONE);
                             mSwipeRefresh.setRefreshing(false);
-                            mEasyRecycleAdapter.addItem(character);
-                            mEasyRecycleAdapter.notifyDataSetChanged();
+                            mCharacterAdapter.setCharacters(characters);
                         }
                     }));
         } else {
@@ -137,34 +129,6 @@ public class MainActivity extends BaseActivity {
                     getString(R.string.dialog_error_no_connection)
             ).show();
         }
-    }
-
-    private void loadCharacters() {
-        mSubscriptions.add(mDataManager.loadCharacters()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(mDataManager.getSubscribeScheduler())
-                .subscribe(new Subscriber<Character>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable error) {
-                        Timber.e("There was an error retrieving the characters " + error);
-                        mProgressBar.setVisibility(View.GONE);
-                        mSwipeRefresh.setRefreshing(false);
-                        DialogFactory.createSimpleErrorDialog(MainActivity.this).show();
-                    }
-
-                    @Override
-                    public void onNext(Character character) {
-                        mProgressBar.setVisibility(View.GONE);
-                        mSwipeRefresh.setRefreshing(false);
-                        mEasyRecycleAdapter.addItem(character);
-                        mEasyRecycleAdapter.notifyDataSetChanged();
-                    }
-                }));
     }
 
 }
