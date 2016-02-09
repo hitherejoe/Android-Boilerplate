@@ -6,17 +6,15 @@ Android Boilerplate [![Build Status](https://travis-ci.org/hitherejoe/Android-Bo
 </p>
 
 
-A simple boilerplate application which demonstrates the downloading, persisting and syncing of data - displayed with a common layout used amongst applications. It features the use of the Design Support library, data caching and the new Test Modules, separating the functional tests from production code.
+A simple boilerplate application which demonstrates the downloading, persisting and syncing of data - displayed with a common layout used amongst applications.
 
 The project is setup using:
 
-- Functional test Module with [Espresso](https://code.google.com/p/android-test-kit/wiki/Espresso)
-- Unit tests with [Robolectric](http://robolectric.org/) 
+- Functional tests with [Espresso](https://code.google.com/p/android-test-kit/wiki/Espresso)
+- Unit tests with [Mockito](http://mockito.org/) and [Robolectric](http://robolectric.org/) 
 - [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
 - [Retrofit](http://square.github.io/retrofit/) and [OkHttp](https://github.com/square/okhttp)
 - [Dagger 2](http://google.github.io/dagger/)
-- [SqlBrite](https://github.com/square/sqlbrite)
-- [EasyAdapter](https://github.com/ribot/easy-adapter)
 - [Butterknife](https://github.com/JakeWharton/butterknife)
 - [Timber] (https://github.com/JakeWharton/timber)
 - [Mockito](http://mockito.org/)
@@ -31,9 +29,9 @@ Requirements
 ------------
 
  - [Android SDK](http://developer.android.com/sdk/index.html).
- - Android [5.1 (API 22) ](http://developer.android.com/tools/revisions/platforms.html#5.1).
+ - Android [6.0 (API 23) ](http://developer.android.com/tools/revisions/platforms.html#6.0).
  - Android SDK Tools
- - Android SDK Build tools 23.0.0.0 rc3
+ - Android SDK Build tools 23.0.2
  - Android Support Repository
  - Android Support library
 
@@ -49,13 +47,17 @@ Testing
 
 For Android Studio to use syntax highlighting for Automated tests and Unit tests you **must** switch the Build Variant to the desired mode.
 
-To run **unit** tests on your machine using [Robolectric] (http://robolectric.org/):
+To run **pmd**, **checkstyle** and **findbug** checks on your machine:
 
-    ./gradlew testDebug
+    ./gradlew check
+
+To run **unit** tests on your machine:
+
+    ./gradlew testDebugUnitTest
     
 To run **automated** tests on connected devices:
 
-    ./gradlew connectedAndroidTest
+    ./gradlew connectedDebugAndroidTest
 
 Thanks
 --------
