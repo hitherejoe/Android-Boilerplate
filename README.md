@@ -10,7 +10,7 @@ A simple boilerplate application which demonstrates the downloading, persisting 
 
 The project is setup using:
 
-- Functional tests with [Espresso](https://code.google.com/p/android-test-kit/wiki/Espresso)
+- Functional tests with [Espresso](http://google.github.io/android-testing-support-library/docs/espresso)
 - Unit tests with [Mockito](http://mockito.org/) and [Robolectric](http://robolectric.org/) 
 - [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
 - [Retrofit](http://square.github.io/retrofit/) and [OkHttp](https://github.com/square/okhttp)
