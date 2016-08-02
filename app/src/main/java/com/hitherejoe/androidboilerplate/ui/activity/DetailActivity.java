@@ -16,18 +16,18 @@ import com.hitherejoe.androidboilerplate.ui.fragment.DetailFragment;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailActivity extends BaseActivity {
 
-    @Bind(R.id.sliding_tabs)
+    @BindView(R.id.sliding_tabs)
     TabLayout mTabLayout;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.pager_character_detail)
+    @BindView(R.id.pager_character_detail)
     ViewPager mBeaconDetailViewPager;
 
     private static final String EXTRA_CHARACTER =

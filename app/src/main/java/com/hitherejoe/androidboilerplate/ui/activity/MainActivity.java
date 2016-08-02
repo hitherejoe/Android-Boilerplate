@@ -22,7 +22,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,10 +32,10 @@ import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.progress_indicator) ProgressBar mProgressBar;
-    @Bind(R.id.recycler_characters) RecyclerView mCharactersRecycler;
-    @Bind(R.id.swipe_container) SwipeRefreshLayout mSwipeRefresh;
-    @Bind(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.progress_indicator) ProgressBar mProgressBar;
+    @BindView(R.id.recycler_characters) RecyclerView mCharactersRecycler;
+    @BindView(R.id.swipe_container) SwipeRefreshLayout mSwipeRefresh;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
 
     @Inject DataManager mDataManager;
     @Inject CharacterAdapter mCharacterAdapter;

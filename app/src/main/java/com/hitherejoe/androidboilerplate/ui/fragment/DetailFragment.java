@@ -15,13 +15,13 @@ import com.hitherejoe.androidboilerplate.ui.adapter.DetailAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment {
 
-    @Bind(R.id.recycler_detail) RecyclerView mDetailRecycler;
-    @Bind(R.id.text_no_data) TextView mNoDataText;
+    @BindView(R.id.recycler_detail) RecyclerView mDetailRecycler;
+    @BindView(R.id.text_no_data) TextView mNoDataText;
 
     private static final String ARG_ITEMS = "ARG_ITEMS";
     private List<String> mItems;

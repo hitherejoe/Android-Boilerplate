@@ -16,7 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailHolder> {
@@ -62,7 +62,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailHold
 
     class DetailHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.text_detail)
+        @BindView(R.id.text_detail)
         TextView detailText;
 
         public DetailHolder(View itemView) {

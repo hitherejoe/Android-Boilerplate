@@ -19,7 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterHolder> {
@@ -109,22 +109,22 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
     class CharacterHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.container_character)
+        @BindView(R.id.container_character)
         View characterContainer;
 
-        @Bind(R.id.text_name)
+        @BindView(R.id.text_name)
         TextView nameText;
 
-        @Bind(R.id.text_description)
+        @BindView(R.id.text_description)
         TextView descriptionText;
 
-        @Bind(R.id.image_character)
+        @BindView(R.id.image_character)
         ImageView characterImage;
 
-        @Bind(R.id.text_view)
+        @BindView(R.id.text_view)
         TextView viewText;
 
-        @Bind(R.id.text_tab)
+        @BindView(R.id.text_tab)
         TextView tabText;
 
         public CharacterHolder(View itemView) {
