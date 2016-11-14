@@ -115,9 +115,9 @@ public class MainActivityTest {
         mockCharacters.add(mockCharacter);
         stubMockCharacters(Observable.just(mockCharacters));
         main.launchActivity(null);
-        onView(withText("Collections"))
+        onView(withText("Collddections"))
                 .perform(click());
-        onView(withText("Films"))
+        onView(withText("Fddilms"))
                 .check(matches(isDisplayed()));
     }
 
