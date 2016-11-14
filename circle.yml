@@ -2,9 +2,9 @@ machine:
   timezone:
     America/Sao_Paulo # Set the timezone
 
-  dependencies:
-    pre:
-      - echo y | android update sdk --no-ui --all --filter "platform, platform-tool"
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --all --filter "platform, platform-tool"
 
 ## Custom notifications
 #notify:
