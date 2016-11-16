@@ -10,15 +10,15 @@ import android.support.v7.widget.Toolbar;
 import com.hitherejoe.androidboilerplate.R;
 import com.hitherejoe.androidboilerplate.data.model.Character;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CharacterActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.toolbar_collapsing)
+    @BindView(R.id.toolbar_collapsing)
     CollapsingToolbarLayout mCollapsingToolbar;
 
     private static final String EXTRA_CHARACTER =
