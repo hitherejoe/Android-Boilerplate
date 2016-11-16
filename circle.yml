@@ -15,6 +15,6 @@ test:
     - (./gradlew assemble -PdisablePreDex):
         timeout: 360
     - cp -r ${HOME}/${CIRCLE_PROJECT_REPONAME}/app/build/outputs/apk/ $CIRCLE_ARTIFACTS
-    - fb-adb shell input keyevent 82
+    - adb shell input keyevent 82
     # run tests  against the emulator.
     - ./gradlew connectedAndroidTest
