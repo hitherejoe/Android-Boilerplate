@@ -15,10 +15,5 @@ test:
     - (./gradlew assemble -PdisablePreDex):
         timeout: 360
     - cp -r ${HOME}/${CIRCLE_PROJECT_REPONAME}/app/build/outputs/apk/ $CIRCLE_ARTIFACTS
-    - emulator -avd circleci-android22 -no-audio -no-window:
-        background: true
-        parallel: true
-    # wait for it to have booted
-    - circle-android wait-for-boot
     # run tests  against the emulator.
     - ./gradlew connectedAndroidTest
