@@ -34,6 +34,7 @@ Requirements
  - Android SDK Build tools 23.0.2
  - Android Support Repository
  - Android Support library
+ - Android Device(for ease)
 
 Building
 --------
